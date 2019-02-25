@@ -1,0 +1,198 @@
+﻿<Materials>
+  <material id="2268">
+    <name>Aqueous Liquids</name>
+    <BuyMin>0</BuyMin>
+    <BuyMed>0</BuyMed>
+    <BuyAvg>0</BuyAvg>
+    <BuyMax>0</BuyMax>
+    <BuySelf>0</BuySelf>
+    <SellMin>0</SellMin>
+    <SellMed>0</SellMed>
+    <SellAvg>0</SellAvg>
+    <SellMax>0</SellMax>
+    <SellSelf>0</SellSelf>  
+</material>
+  <material id="2305">
+    <name>Autotrophs</name>
+    <BuyMin>0</BuyMin>
+    <BuyMed>0</BuyMed>
+    <BuyAvg>0</BuyAvg>
+    <BuyMax>0</BuyMax>
+    <BuySelf>0</BuySelf>
+    <SellMin>0</SellMin>
+    <SellMed>0</SellMed>
+    <SellAvg>0</SellAvg>
+    <SellMax>0</SellMax>
+    <SellSelf>0</SellSelf>
+  </material>
+  <material id="2267">
+    <name>Base Metals</name>
+    <BuyMin>0</BuyMin>
+    <BuyMed>0</BuyMed>
+    <BuyAvg>0</BuyAvg>
+    <BuyMax>0</BuyMax>
+    <BuySelf>0</BuySelf>
+    <SellMin>0</SellMin>
+    <SellMed>0</SellMed>
+    <SellAvg>0</SellAvg>
+    <SellMax>0</SellMax>
+    <SellSelf>0</SellSelf>
+  </material>
+  <material id="2288">
+    <name>Carbon Compounds</name>
+      <BuyMin>0</BuyMin>
+      <BuyMed>0</BuyMed>
+      <BuyAvg>0</BuyAvg>
+      <BuyMax>0</BuyMax>
+      <BuySelf>0</BuySelf>
+      <SellMin>0</SellMin>
+      <SellMed>0</SellMed>
+      <SellAvg>0</SellAvg>
+      <SellMax>0</SellMax>
+      <SellSelf>0</SellSelf>
+  </material>
+  <material id="2287">
+    <name>Complex Organisms</name>
+    <BuyMin>0</BuyMin>
+    <BuyMed>0</BuyMed>
+    <BuyAvg>0</BuyAvg>
+    <BuyMax>0</BuyMax>
+    <BuySelf>0</BuySelf>
+    <SellMin>0</SellMin>
+    <SellMed>0</SellMed>
+    <SellAvg>0</SellAvg>
+    <SellMax>0</SellMax>
+    <SellSelf>0</SellSelf>
+  </material>
+  <material id="2307">
+    <name>Felsic Magma</name>
+    <BuyMin>0</BuyMin>
+    <BuyMed>0</BuyMed>
+    <BuyAvg>0</BuyAvg>
+    <BuyMax>0</BuyMax>
+    <BuySelf>0</BuySelf>
+    <SellMin>0</SellMin>
+    <SellMed>0</SellMed>
+    <SellAvg>0</SellAvg>
+    <SellMax>0</SellMax>
+    <SellSelf>0</SellSelf>
+  </material>
+  <material id="2272">
+    <name>Heavy Metals</name>
+    <BuyMin>0</BuyMin>
+    <BuyMed>0</BuyMed>
+    <BuyAvg>0</BuyAvg>
+    <BuyMax>0</BuyMax>
+    <BuySelf>0</BuySelf>
+    <SellMin>0</SellMin>
+    <SellMed>0</SellMed>
+    <SellAvg>0</SellAvg>
+    <SellMax>0</SellMax>
+    <SellSelf>0</SellSelf>
+  </material>
+  <material id="2309">
+    <name>Ionic Solutions</name>
+    <BuyMin>0</BuyMin>
+    <BuyMed>0</BuyMed>
+    <BuyAvg>0</BuyAvg>
+    <BuyMax>0</BuyMax>
+    <BuySelf>0</BuySelf>
+    <SellMin>0</SellMin>
+    <SellMed>0</SellMed>
+    <SellAvg>0</SellAvg>
+    <SellMax>0</SellMax>
+    <SellSelf>0</SellSelf>
+  </material>
+  <material id="2073">
+    <name>Microorganisms</name>
+    <BuyMin>0</BuyMin>
+    <BuyMed>0</BuyMed>
+    <BuyAvg>0</BuyAvg>
+    <BuyMax>0</BuyMax>
+    <BuySelf>0</BuySelf>
+    <SellMin>0</SellMin>
+    <SellMed>0</SellMed>
+    <SellAvg>0</SellAvg>
+    <SellMax>0</SellMax>
+    <SellSelf>0</SellSelf>
+  </material>
+  <material id="2310">
+    <name>Noble Gas</name>
+    <BuyMin>0</BuyMin>
+    <BuyMed>0</BuyMed>
+    <BuyAvg>0</BuyAvg>
+    <BuyMax>0</BuyMax>
+    <BuySelf>0</BuySelf>
+    <SellMin>0</SellMin>
+    <SellMed>0</SellMed>
+    <SellAvg>0</SellAvg>
+    <SellMax>0</SellMax>
+    <SellSelf>0</SellSelf>
+  </material>
+  <material id="2270">
+    <name>Noble Metals</name>
+    <BuyMin>0</BuyMin>
+    <BuyMed>0</BuyMed>
+    <BuyAvg>0</BuyAvg>
+    <BuyMax>0</BuyMax>
+    <BuySelf>0</BuySelf>
+    <SellMin>0</SellMin>
+    <SellMed>0</SellMed>
+    <SellAvg>0</SellAvg>
+    <SellMax>0</SellMax>
+    <SellSelf>0</SellSelf>
+  </material>
+  <material id="2306">
+    <name>Non-CS Crystals</name>
+    <BuyMin>0</BuyMin>
+    <BuyMed>0</BuyMed>
+    <BuyAvg>0</BuyAvg>
+    <BuyMax>0</BuyMax>
+    <BuySelf>0</BuySelf>
+    <SellMin>0</SellMin>
+    <SellMed>0</SellMed>
+    <SellAvg>0</SellAvg>
+    <SellMax>0</SellMax>
+    <SellSelf>0</SellSelf>
+  </material>
+  <material id="2286">
+    <name>Planktic Colonies</name>
+    <BuyMin>0</BuyMin>
+    <BuyMed>0</BuyMed>
+    <BuyAvg>0</BuyAvg>
+    <BuyMax>0</BuyMax>
+    <BuySelf>0</BuySelf>
+    <SellMin>0</SellMin>
+    <SellMed>0</SellMed>
+    <SellAvg>0</SellAvg>
+    <SellMax>0</SellMax>
+    <SellSelf>0</SellSelf>
+  </material>
+  <material id="2311">
+    <name>Reactive Gas</name>
+    <BuyMin>0</BuyMin>
+    <BuyMed>0</BuyMed>
+    <BuyAvg>0</BuyAvg>
+    <BuyMax>0</BuyMax>
+    <BuySelf>0</BuySelf>
+    <SellMin>0</SellMin>
+    <SellMed>0</SellMed>
+    <SellAvg>0</SellAvg>
+    <SellMax>0</SellMax>
+    <SellSelf>0</SellSelf>
+  </material>
+  <material id="2308">
+    <name>Suspended Plasma</name>
+    <BuyMin>0</BuyMin>
+    <BuyMed>0</BuyMed>
+    <BuyAvg>0</BuyAvg>
+    <BuyMax>0</BuyMax>
+    <BuySelf>0</BuySelf>
+    <SellMin>0</SellMin>
+    <SellMed>0</SellMed>
+    <SellAvg>0</SellAvg>
+    <SellMax>0</SellMax>
+    <SellSelf>0</SellSelf>
+  </material>
+
+</Materials>
