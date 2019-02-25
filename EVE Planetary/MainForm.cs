@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace EVE_Planetary
         public MainForm()
         {
             InitializeComponent();
-            DGVPrices.DataSource = ReadXml();
+            DGVPrices.DataSource = ReadTxt();
         }
 
         private DataTable CreateTable()
@@ -141,10 +142,35 @@ namespace EVE_Planetary
             return dt;
         }
 
+        private DataTable ReadTxt()
+        {
+            DataTable dt = null;
+            try
+            {
+                dt = CreateTable();
+                StreamReader sr = new StreamReader(@"Resources/typeids.txt");
+                string line;
+                DataRow newRow = null;
+                while (!sr.EndOfStream)
+                {
+                    line = sr.ReadLine();
+                    newRow = dt.NewRow();
+                    newRow["ID"] = line.Split(',')[0];
+                    newRow["Name"] = line.Split(',')[1];
+                    dt.Rows.Add(newRow);
+                }
+                sr.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return dt;
+        }
 
         private void UpdatePrices_Click(object sender, EventArgs e)
         {
-            for (int row = 0; row < DGVPrices.Rows.Count; row++)
+            Parallel.For(0, DGVPrices.Rows.Count, row =>
             {
                 if (DGVPrices.Rows[row].Cells["ID"].Value != null)
                 {
@@ -183,7 +209,7 @@ namespace EVE_Planetary
                     }
 
                 }
-            }
+            });
         }
     }
 }
