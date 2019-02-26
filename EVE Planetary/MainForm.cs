@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
@@ -15,10 +17,25 @@ namespace EVE_Planetary
 {
     public partial class MainForm : Form
     {
+        DataTable MainPricesDT = new DataTable();
+        Dictionary<string, int> PriceKeys = new Dictionary<string, int>();
+        struct ThreadStrInt
+        {
+            public string _str { get; set; }
+            public int _int { get; set; }
+        }
         public MainForm()
         {
             InitializeComponent();
-            DGVPrices.DataSource = ReadTxt();
+            //speedUP on datasource updating
+            DGVPrices.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+            MainPricesDT.BeginLoadData();
+            MainPricesDT = ReadTxt();
+            MainPricesDT.AcceptChanges();
+            MainPricesDT.EndLoadData();
+            DGVPrices.DataSource = MainPricesDT;
+            DGVPrices.Columns["ID"].DefaultCellStyle = new DataGridViewCellStyle { Format = "N0" };
+            DGVPrices.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         }
 
         private DataTable CreateTable()
@@ -27,17 +44,17 @@ namespace EVE_Planetary
             DataColumn colID = new DataColumn("ID", typeof(Int32));
             DataColumn colName = new DataColumn("Name", typeof(String));
 
-            DataColumn colBuyMin = new DataColumn("Buy(min)", typeof(String));
-            DataColumn colBuyMedian = new DataColumn("Buy(median)", typeof(String));
-            DataColumn colBuyAvg = new DataColumn("Buy(avg)", typeof(String));
-            DataColumn colBuyMax = new DataColumn("Buy(max)", typeof(String));
-            DataColumn colBuySelf = new DataColumn("Buy(self)", typeof(String));
+            DataColumn colBuyMin = new DataColumn("Buy(min)", typeof(double));
+            DataColumn colBuyMedian = new DataColumn("Buy(median)", typeof(double));
+            DataColumn colBuyAvg = new DataColumn("Buy(avg)", typeof(double));
+            DataColumn colBuyMax = new DataColumn("Buy(max)", typeof(double));
+            DataColumn colBuySelf = new DataColumn("Buy(self)", typeof(double));
 
-            DataColumn colSellMin = new DataColumn("Sell(min)", typeof(String));
-            DataColumn colSellMedian = new DataColumn("Sell(median)", typeof(String));
-            DataColumn colSellAvg = new DataColumn("Sell(avg)", typeof(String));
-            DataColumn colSellMax = new DataColumn("Sell(max)", typeof(String));
-            DataColumn colSellSelf = new DataColumn("Sell(self)", typeof(String));
+            DataColumn colSellMin = new DataColumn("Sell(min)", typeof(double));
+            DataColumn colSellMedian = new DataColumn("Sell(median)", typeof(double));
+            DataColumn colSellAvg = new DataColumn("Sell(avg)", typeof(double));
+            DataColumn colSellMax = new DataColumn("Sell(max)", typeof(double));
+            DataColumn colSellSelf = new DataColumn("Sell(self)", typeof(double));
 
             dt.Columns.Add(colID);
             dt.Columns.Add(colName);
@@ -170,46 +187,148 @@ namespace EVE_Planetary
 
         private void UpdatePrices_Click(object sender, EventArgs e)
         {
-            Parallel.For(0, DGVPrices.Rows.Count, row =>
+            /*Thread PriceThreading = new Thread(UpdatePricesThrd);
+            PriceThreading.Start();*/
+            //UpdatePricesThrd();
+            int totalRows = MainPricesDT.Rows.Count;
+            for (int row = 0; row < totalRows; row++)
             {
-                if (DGVPrices.Rows[row].Cells["ID"].Value != null)
+                if (MainPricesDT.Rows[row]["ID"] != null)
                 {
-                    XmlDocument doc1 = new XmlDocument();
-                    doc1.Load("https://api.evemarketer.com/ec/marketstat?typeid=" + DGVPrices.Rows[row].Cells["ID"].Value.ToString() + "&regionlimit=10000002");
-                    XmlElement root = doc1.DocumentElement;
-                    XmlNodeList Bnodes = root.SelectNodes("/exec_api/marketstat/type/buy");
-                    XmlNodeList Snodes = root.SelectNodes("/exec_api/marketstat/type/sell");
-
-                    foreach (XmlNode node in Bnodes)
+                    PriceKeys.Add(MainPricesDT.Rows[row]["ID"].ToString(), row);
+                }
+            }
+            Invoke((MethodInvoker)delegate
+            {
+                ProgressBarPrice.Maximum = totalRows;
+                ProgressBarPrice.Minimum = 0;
+                DGVPrices.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+            });
+            string matIDs = "";
+            int rowsCnt = 0;
+            for (int row = 0; row < totalRows; row++)
+            {
+                if (MainPricesDT.Rows[row]["ID"] != null)
+                {
+                    rowsCnt++;
+                    matIDs += MainPricesDT.Rows[row]["ID"].ToString() + (((rowsCnt % 100 == 0) || (rowsCnt == totalRows - 1)) ? "" : ",");
+                    if (((rowsCnt % 100 == 0) || (rowsCnt == totalRows - 1)) && (matIDs != ""))
                     {
-                        string Bmin = node["min"].InnerText;
-                        string Bmax = node["max"].InnerText;
-                        string Bavg = node["avg"].InnerText;
-                        string Bmed = node["median"].InnerText;
-
-
-                        DGVPrices.Rows[row].Cells["Buy(min)"].Value = Bmin;
-                        DGVPrices.Rows[row].Cells["Buy(max)"].Value = Bmax;
-                        DGVPrices.Rows[row].Cells["Buy(avg)"].Value = Bavg;
-                        DGVPrices.Rows[row].Cells["Buy(median)"].Value = Bmed;
+                        string IDs = matIDs;
+                        matIDs = "";
+                        Thread nextQ = new Thread(new ParameterizedThreadStart(UpdateDt));
+                        ThreadStrInt StrInt = new ThreadStrInt();
+                        StrInt._str = IDs;
+                        StrInt._int = rowsCnt;
+                        nextQ.Start(StrInt);
                     }
+                }
+            }
+            Invoke((MethodInvoker)delegate
+            {
+                DGVPrices.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            });
+        }
 
-                    foreach (XmlNode node in Snodes)
+        private void UpdatePricesThrd()
+        {
+            int totalRows = MainPricesDT.Rows.Count;
+            for (int row = 0; row < totalRows; row++)
+            {
+                if (MainPricesDT.Rows[row]["ID"] != null)
+                {
+                    PriceKeys.Add(MainPricesDT.Rows[row]["ID"].ToString(), row);
+                }
+            }
+            Invoke((MethodInvoker)delegate
+            {
+                ProgressBarPrice.Maximum = totalRows;
+                ProgressBarPrice.Minimum = 0;
+            DGVPrices.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+            });
+            string matIDs = "";
+            int rowsCnt = 0;
+            for (int row = 0; row < totalRows; row++)
+            {
+                if (MainPricesDT.Rows[row]["ID"] != null)
+                {
+                    rowsCnt++;
+                    matIDs += MainPricesDT.Rows[row]["ID"].ToString() + (((rowsCnt % 100 == 0) || (rowsCnt == totalRows - 1)) ? "" : ",");
+                    if (((rowsCnt % 100 == 0) || (rowsCnt == totalRows - 1)) && (matIDs != ""))
                     {
-                        string Smin = node["min"].InnerText;
-                        string Smax = node["max"].InnerText;
-                        string Savg = node["avg"].InnerText;
-                        string Smed = node["median"].InnerText;
-
-
-                        DGVPrices.Rows[row].Cells["Sell(min)"].Value = Smin;
-                        DGVPrices.Rows[row].Cells["Sell(max)"].Value = Smax;
-                        DGVPrices.Rows[row].Cells["Sell(avg)"].Value = Savg;
-                        DGVPrices.Rows[row].Cells["Sell(median)"].Value = Smed;
+                        string IDs = matIDs;
+                        matIDs = "";
+                        Thread nextQ = new Thread(new ParameterizedThreadStart(UpdateDt));
+                        ThreadStrInt StrInt = new ThreadStrInt();
+                        StrInt._str = IDs;
+                        StrInt._int = rowsCnt;
+                        nextQ.Start(StrInt);
                     }
 
                 }
+            }
+            Invoke((MethodInvoker)delegate
+            {
+                DGVPrices.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             });
+        }
+
+        private void UpdateDt(object obj)
+        {
+            Thread.Sleep(5);
+            ThreadStrInt StrInt = (ThreadStrInt)obj;
+            string IDs;
+            int rowsCnt;
+            IDs = StrInt._str;
+            rowsCnt = StrInt._int;
+            XmlDocument doc1 = new XmlDocument();
+            doc1.Load("https://api.evemarketer.com/ec/marketstat?typeid=" + IDs + "&regionlimit=10000002");
+
+            XmlElement root = doc1.DocumentElement;
+            XmlNodeList TypeNodes = root.SelectNodes("/exec_api/marketstat/type");
+
+
+            foreach (XmlNode Tnode in TypeNodes)
+            {
+                try
+                {
+                    int curRow = 0;
+                    PriceKeys.TryGetValue(Tnode.Attributes["id"].Value, out curRow);
+                    XmlNode Bnodes = Tnode.SelectSingleNode("buy");
+                    XmlNode Snodes = Tnode.SelectSingleNode("sell");
+
+                    double Bmin = Convert.ToDouble(Bnodes["min"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
+                    double Bmax = Convert.ToDouble(Bnodes["max"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
+                    double Bavg = Convert.ToDouble(Bnodes["avg"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
+                    double Bmed = Convert.ToDouble(Bnodes["median"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
+
+                    double Smin = Convert.ToDouble(Snodes["min"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
+                    double Smax = Convert.ToDouble(Snodes["max"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
+                    double Savg = Convert.ToDouble(Snodes["avg"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
+                    double Smed = Convert.ToDouble(Snodes["median"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
+
+                    Invoke((MethodInvoker)delegate
+                    {
+                       // MainPricesDT.BeginLoadData();
+                        MainPricesDT.Rows[curRow]["Buy(min)"] = Bmin;
+                        MainPricesDT.Rows[curRow]["Buy(max)"] = Bmax;
+                        MainPricesDT.Rows[curRow]["Buy(avg)"] = Bavg;
+                        MainPricesDT.Rows[curRow]["Buy(median)"] = Bmed;
+
+                        MainPricesDT.Rows[curRow]["Sell(min)"] = Smin;
+                        MainPricesDT.Rows[curRow]["Sell(max)"] = Smax;
+                        MainPricesDT.Rows[curRow]["Sell(avg)"] = Savg;
+                        MainPricesDT.Rows[curRow]["Sell(median)"] = Smed;
+                     //   MainPricesDT.EndLoadData();
+
+                        ProgressBarPrice.Value++;
+                    });
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
     }
 }

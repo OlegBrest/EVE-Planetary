@@ -28,13 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPrice = new System.Windows.Forms.TabPage();
             this.splitPrices = new System.Windows.Forms.SplitContainer();
             this.DGVPrices = new System.Windows.Forms.DataGridView();
+            this.UpdatePrices = new System.Windows.Forms.Button();
             this.tabWorks = new System.Windows.Forms.TabPage();
             this.tabCalc = new System.Windows.Forms.TabPage();
-            this.UpdatePrices = new System.Windows.Forms.Button();
+            this.ProgressBarPrice = new System.Windows.Forms.ProgressBar();
             this.tabControl1.SuspendLayout();
             this.tabPrice.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitPrices)).BeginInit();
@@ -82,19 +84,42 @@
             // splitPrices.Panel2
             // 
             this.splitPrices.Panel2.Controls.Add(this.UpdatePrices);
+            this.splitPrices.Panel2.Controls.Add(this.ProgressBarPrice);
             this.splitPrices.Size = new System.Drawing.Size(786, 418);
-            this.splitPrices.SplitterDistance = 377;
+            this.splitPrices.SplitterDistance = 360;
             this.splitPrices.TabIndex = 1;
             // 
             // DGVPrices
             // 
             this.DGVPrices.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.DGVPrices.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.NullValue = null;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DGVPrices.DefaultCellStyle = dataGridViewCellStyle1;
             this.DGVPrices.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DGVPrices.Location = new System.Drawing.Point(0, 0);
             this.DGVPrices.Name = "DGVPrices";
-            this.DGVPrices.Size = new System.Drawing.Size(786, 377);
+            this.DGVPrices.Size = new System.Drawing.Size(786, 360);
             this.DGVPrices.TabIndex = 0;
+            // 
+            // UpdatePrices
+            // 
+            this.UpdatePrices.BackColor = System.Drawing.Color.Transparent;
+            this.UpdatePrices.ForeColor = System.Drawing.Color.Black;
+            this.UpdatePrices.Location = new System.Drawing.Point(3, 7);
+            this.UpdatePrices.Name = "UpdatePrices";
+            this.UpdatePrices.Size = new System.Drawing.Size(88, 31);
+            this.UpdatePrices.TabIndex = 0;
+            this.UpdatePrices.Text = "UpdatePrices";
+            this.UpdatePrices.UseVisualStyleBackColor = false;
+            this.UpdatePrices.Click += new System.EventHandler(this.UpdatePrices_Click);
             // 
             // tabWorks
             // 
@@ -116,15 +141,13 @@
             this.tabCalc.Text = "Calculations";
             this.tabCalc.UseVisualStyleBackColor = true;
             // 
-            // UpdatePrices
+            // ProgressBarPrice
             // 
-            this.UpdatePrices.Location = new System.Drawing.Point(6, 4);
-            this.UpdatePrices.Name = "UpdatePrices";
-            this.UpdatePrices.Size = new System.Drawing.Size(88, 30);
-            this.UpdatePrices.TabIndex = 0;
-            this.UpdatePrices.Text = "UpdatePrices";
-            this.UpdatePrices.UseVisualStyleBackColor = true;
-            this.UpdatePrices.Click += new System.EventHandler(this.UpdatePrices_Click);
+            this.ProgressBarPrice.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.ProgressBarPrice.Location = new System.Drawing.Point(0, 44);
+            this.ProgressBarPrice.Name = "ProgressBarPrice";
+            this.ProgressBarPrice.Size = new System.Drawing.Size(786, 10);
+            this.ProgressBarPrice.TabIndex = 1;
             // 
             // MainForm
             // 
@@ -154,6 +177,7 @@
         private System.Windows.Forms.SplitContainer splitPrices;
         private System.Windows.Forms.TabPage tabWorks;
         private System.Windows.Forms.Button UpdatePrices;
+        private System.Windows.Forms.ProgressBar ProgressBarPrice;
     }
 }
 
