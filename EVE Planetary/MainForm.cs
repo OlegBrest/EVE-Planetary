@@ -19,28 +19,22 @@ namespace EVE_Planetary
     {
         DataTable MainPricesDT = new DataTable();
         Dictionary<string, int> PriceKeys = new Dictionary<string, int>();
+        int MaxThreads = 20;
+        int PageSize = 150;
         struct ThreadStrInt
         {
             public string _str { get; set; }
             public int _int { get; set; }
         }
+
         public MainForm()
         {
             InitializeComponent();
-            //speedUP on datasource updating
-            DGVPrices.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-            MainPricesDT.BeginLoadData();
-            MainPricesDT = ReadTxt();
-            MainPricesDT.AcceptChanges();
-            MainPricesDT.EndLoadData();
-            DGVPrices.DataSource = MainPricesDT;
-            DGVPrices.Columns["ID"].DefaultCellStyle = new DataGridViewCellStyle { Format = "N0" };
-            DGVPrices.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         }
 
         private DataTable CreateTable()
         {
-            DataTable dt = new DataTable("Matrials");
+            DataTable dt = new DataTable("Materials");
             DataColumn colID = new DataColumn("ID", typeof(Int32));
             DataColumn colName = new DataColumn("Name", typeof(String));
 
@@ -187,52 +181,14 @@ namespace EVE_Planetary
 
         private void UpdatePrices_Click(object sender, EventArgs e)
         {
-            /*Thread PriceThreading = new Thread(UpdatePricesThrd);
-            PriceThreading.Start();*/
-            //UpdatePricesThrd();
-            int totalRows = MainPricesDT.Rows.Count;
-            for (int row = 0; row < totalRows; row++)
-            {
-                if (MainPricesDT.Rows[row]["ID"] != null)
-                {
-                    PriceKeys.Add(MainPricesDT.Rows[row]["ID"].ToString(), row);
-                }
-            }
-            Invoke((MethodInvoker)delegate
-            {
-                ProgressBarPrice.Maximum = totalRows;
-                ProgressBarPrice.Minimum = 0;
-                DGVPrices.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
-            });
-            string matIDs = "";
-            int rowsCnt = 0;
-            for (int row = 0; row < totalRows; row++)
-            {
-                if (MainPricesDT.Rows[row]["ID"] != null)
-                {
-                    rowsCnt++;
-                    matIDs += MainPricesDT.Rows[row]["ID"].ToString() + (((rowsCnt % 100 == 0) || (rowsCnt == totalRows - 1)) ? "" : ",");
-                    if (((rowsCnt % 100 == 0) || (rowsCnt == totalRows - 1)) && (matIDs != ""))
-                    {
-                        string IDs = matIDs;
-                        matIDs = "";
-                        Thread nextQ = new Thread(new ParameterizedThreadStart(UpdateDt));
-                        ThreadStrInt StrInt = new ThreadStrInt();
-                        StrInt._str = IDs;
-                        StrInt._int = rowsCnt;
-                        nextQ.Start(StrInt);
-                    }
-                }
-            }
-            Invoke((MethodInvoker)delegate
-            {
-                DGVPrices.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            });
+            Thread PriceThreading = new Thread(UpdatePricesThrd);
+            PriceThreading.Start();
         }
 
         private void UpdatePricesThrd()
         {
             int totalRows = MainPricesDT.Rows.Count;
+            PriceKeys.Clear();
             for (int row = 0; row < totalRows; row++)
             {
                 if (MainPricesDT.Rows[row]["ID"] != null)
@@ -242,40 +198,41 @@ namespace EVE_Planetary
             }
             Invoke((MethodInvoker)delegate
             {
-                ProgressBarPrice.Maximum = totalRows;
+                ProgressBarPrice.Maximum = totalRows - 1;
                 ProgressBarPrice.Minimum = 0;
-            DGVPrices.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+                ProgressBarPrice.Value = 0;
+                DGVPrices.DataSource = null;
+                DGVPrices.Hide();
+                DGVPrices.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             });
             string matIDs = "";
-            int rowsCnt = 0;
             for (int row = 0; row < totalRows; row++)
             {
                 if (MainPricesDT.Rows[row]["ID"] != null)
                 {
-                    rowsCnt++;
-                    matIDs += MainPricesDT.Rows[row]["ID"].ToString() + (((rowsCnt % 100 == 0) || (rowsCnt == totalRows - 1)) ? "" : ",");
-                    if (((rowsCnt % 100 == 0) || (rowsCnt == totalRows - 1)) && (matIDs != ""))
+                    matIDs += MainPricesDT.Rows[row]["ID"].ToString() + (((row % PageSize == 0) || (row == totalRows - 1)) ? "" : ",");
+                    if (((row % PageSize == 0) || (row == totalRows - 1)) && (matIDs != ""))
                     {
                         string IDs = matIDs;
                         matIDs = "";
                         Thread nextQ = new Thread(new ParameterizedThreadStart(UpdateDt));
                         ThreadStrInt StrInt = new ThreadStrInt();
                         StrInt._str = IDs;
-                        StrInt._int = rowsCnt;
+                        StrInt._int = row;
                         nextQ.Start(StrInt);
                     }
-
                 }
             }
-            Invoke((MethodInvoker)delegate
-            {
-                DGVPrices.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            });
         }
 
         private void UpdateDt(object obj)
         {
-            Thread.Sleep(5);
+            
+            while (MaxThreads < 0)
+            {
+                Thread.Sleep(10);
+            };
+            MaxThreads--;
             ThreadStrInt StrInt = (ThreadStrInt)obj;
             string IDs;
             int rowsCnt;
@@ -287,29 +244,29 @@ namespace EVE_Planetary
             XmlElement root = doc1.DocumentElement;
             XmlNodeList TypeNodes = root.SelectNodes("/exec_api/marketstat/type");
 
-
-            foreach (XmlNode Tnode in TypeNodes)
+            Invoke((MethodInvoker)delegate
             {
-                try
+                MainPricesDT.BeginLoadData();
+                foreach (XmlNode Tnode in TypeNodes)
                 {
-                    int curRow = 0;
-                    PriceKeys.TryGetValue(Tnode.Attributes["id"].Value, out curRow);
-                    XmlNode Bnodes = Tnode.SelectSingleNode("buy");
-                    XmlNode Snodes = Tnode.SelectSingleNode("sell");
-
-                    double Bmin = Convert.ToDouble(Bnodes["min"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
-                    double Bmax = Convert.ToDouble(Bnodes["max"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
-                    double Bavg = Convert.ToDouble(Bnodes["avg"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
-                    double Bmed = Convert.ToDouble(Bnodes["median"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
-
-                    double Smin = Convert.ToDouble(Snodes["min"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
-                    double Smax = Convert.ToDouble(Snodes["max"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
-                    double Savg = Convert.ToDouble(Snodes["avg"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
-                    double Smed = Convert.ToDouble(Snodes["median"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
-
-                    Invoke((MethodInvoker)delegate
+                    try
                     {
-                       // MainPricesDT.BeginLoadData();
+                        int curRow = 0;
+                        PriceKeys.TryGetValue(Tnode.Attributes["id"].Value, out curRow);
+                        XmlNode Bnodes = Tnode.SelectSingleNode("buy");
+                        XmlNode Snodes = Tnode.SelectSingleNode("sell");
+
+                        double Bmin = Convert.ToDouble(Bnodes["min"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
+                        double Bmax = Convert.ToDouble(Bnodes["max"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
+                        double Bavg = Convert.ToDouble(Bnodes["avg"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
+                        double Bmed = Convert.ToDouble(Bnodes["median"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
+
+                        double Smin = Convert.ToDouble(Snodes["min"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
+                        double Smax = Convert.ToDouble(Snodes["max"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
+                        double Savg = Convert.ToDouble(Snodes["avg"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
+                        double Smed = Convert.ToDouble(Snodes["median"].InnerText, CultureInfo.GetCultureInfo("en-US").NumberFormat);
+
+
                         MainPricesDT.Rows[curRow]["Buy(min)"] = Bmin;
                         MainPricesDT.Rows[curRow]["Buy(max)"] = Bmax;
                         MainPricesDT.Rows[curRow]["Buy(avg)"] = Bavg;
@@ -319,16 +276,92 @@ namespace EVE_Planetary
                         MainPricesDT.Rows[curRow]["Sell(max)"] = Smax;
                         MainPricesDT.Rows[curRow]["Sell(avg)"] = Savg;
                         MainPricesDT.Rows[curRow]["Sell(median)"] = Smed;
-                     //   MainPricesDT.EndLoadData();
 
+                        /*Invoke((MethodInvoker)delegate
+                        {*/
                         ProgressBarPrice.Value++;
-                    });
+                        if (ProgressBarPrice.Value == ProgressBarPrice.Maximum)
+                        {
+                            ProgressBarPrice.Value = 0;
+                            ShowPriceDGV();
+                        }
+                        //});
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
-                catch (Exception ex)
+                MainPricesDT.EndLoadData();
+            });
+            MaxThreads++;
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            //speedUP on datasource updating
+            DGVPrices.Hide();
+            DGVPrices.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+            MainPricesDT.BeginLoadData();
+            if (File.Exists(@"Resources/elements.xml"))
+            {
+                DataSet ds = new DataSet();
+                ds.ReadXml(@"Resources/elements.xml");
+
+                foreach (DataTable table in ds.Tables)
                 {
-                    MessageBox.Show(ex.Message);
+                    if (table.TableName == "Materials")
+                    {
+                        MainPricesDT = table;
+                    }
                 }
             }
+            else
+            {
+                MainPricesDT = ReadTxt();
+            }
+            MainPricesDT.EndLoadData();
+            ShowPriceDGV();
+        }
+
+        private void ClearEmpty_Click(object sender, EventArgs e)
+        {
+            DGVPrices.DataSource = null;
+            int totalRows = MainPricesDT.Rows.Count - 1;
+            ProgressBarPrice.Maximum = totalRows+1;
+            ProgressBarPrice.Minimum = 0;
+            ProgressBarPrice.Value = 0;
+            for (int i = totalRows; i >= 0; i--)
+            {
+                if ((MainPricesDT.Rows[i]["Buy(min)"].ToString() == "0") &&
+                    (MainPricesDT.Rows[i]["Buy(max)"].ToString() == "0") &&
+                (MainPricesDT.Rows[i]["Buy(avg)"].ToString() == "0") &&
+                (MainPricesDT.Rows[i]["Buy(median)"].ToString() == "0") &&
+                (MainPricesDT.Rows[i]["Sell(min)"].ToString() == "0") &&
+                (MainPricesDT.Rows[i]["Sell(max)"].ToString() == "0") &&
+                (MainPricesDT.Rows[i]["Sell(avg)"].ToString() == "0") &&
+                (MainPricesDT.Rows[i]["Sell(median)"].ToString() == "0"))
+                {
+                    MainPricesDT.Rows.RemoveAt(i);
+                }
+                ProgressBarPrice.Value++;
+            }
+            ProgressBarPrice.Value = 0;
+            ShowPriceDGV();
+        }
+
+        private void SaveBttn_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(@"Resources/elements.xml")) File.Delete(@"Resources/elements.xml");
+            MainPricesDT.WriteXml(@"Resources/elements.xml");
+        }
+
+        private void ShowPriceDGV()
+        {
+            DGVPrices.DataSource = MainPricesDT;
+            DGVPrices.Columns["ID"].DefaultCellStyle = new DataGridViewCellStyle { Format = "N0" };
+            DGVPrices.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            DGVPrices.Show();
         }
     }
 }
