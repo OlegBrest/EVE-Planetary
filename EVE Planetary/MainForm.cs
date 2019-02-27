@@ -18,6 +18,7 @@ namespace EVE_Planetary
     public partial class MainForm : Form
     {
         DataTable MainPricesDT = new DataTable();
+        DataTable BPRTable = new DataTable();
         Dictionary<string, int> PriceKeys = new Dictionary<string, int>();
         int MaxThreads = 20;
         int PageSize = 150;
@@ -30,9 +31,11 @@ namespace EVE_Planetary
         public MainForm()
         {
             InitializeComponent();
+            comboCalcSell.SelectedIndex = 0;
+            comboCalcBuy.SelectedIndex = 1;
         }
 
-        private DataTable CreateTable()
+        private DataTable CreatePriceTable()
         {
             DataTable dt = new DataTable("Materials");
             DataColumn colID = new DataColumn("ID", typeof(Int32));
@@ -68,6 +71,44 @@ namespace EVE_Planetary
             return dt;
         }
 
+        //todo need table or some to bluebrints
+        private DataTable CreateBPRTable()
+        {
+            DataTable dt = new DataTable("BPRs");
+            DataColumn colID = new DataColumn("ID", typeof(Int32));
+            DataColumn colName = new DataColumn("Name", typeof(String));
+
+            DataColumn colBuyMin = new DataColumn("Buy(min)", typeof(double));
+            DataColumn colBuyMedian = new DataColumn("Buy(median)", typeof(double));
+            DataColumn colBuyAvg = new DataColumn("Buy(avg)", typeof(double));
+            DataColumn colBuyMax = new DataColumn("Buy(max)", typeof(double));
+            DataColumn colBuySelf = new DataColumn("Buy(self)", typeof(double));
+
+            DataColumn colSellMin = new DataColumn("Sell(min)", typeof(double));
+            DataColumn colSellMedian = new DataColumn("Sell(median)", typeof(double));
+            DataColumn colSellAvg = new DataColumn("Sell(avg)", typeof(double));
+            DataColumn colSellMax = new DataColumn("Sell(max)", typeof(double));
+            DataColumn colSellSelf = new DataColumn("Sell(self)", typeof(double));
+
+            dt.Columns.Add(colID);
+            dt.Columns.Add(colName);
+
+            dt.Columns.Add(colBuyMin);
+            dt.Columns.Add(colBuyMedian);
+            dt.Columns.Add(colBuyAvg);
+            dt.Columns.Add(colBuyMax);
+            dt.Columns.Add(colBuySelf);
+
+            dt.Columns.Add(colSellMin);
+            dt.Columns.Add(colSellMedian);
+            dt.Columns.Add(colSellAvg);
+            dt.Columns.Add(colSellMax);
+            dt.Columns.Add(colSellSelf);
+
+            return dt;
+        }
+
+
         private DataTable ReadXml()
         {
             DataTable dt = null;
@@ -76,7 +117,7 @@ namespace EVE_Planetary
                 //загружаем xml файл
                 XDocument xDoc = XDocument.Load(@"Resources/elements.xml");
                 //создаём таблицу
-                dt = CreateTable();
+                dt = CreatePriceTable();
                 DataRow newRow = null;
                 //получаем все узлы в xml файле
                 foreach (XElement elm in xDoc.Descendants("material"))
@@ -158,7 +199,7 @@ namespace EVE_Planetary
             DataTable dt = null;
             try
             {
-                dt = CreateTable();
+                dt = CreatePriceTable();
                 StreamReader sr = new StreamReader(@"Resources/typeids.txt");
                 string line;
                 DataRow newRow = null;
@@ -227,7 +268,7 @@ namespace EVE_Planetary
 
         private void UpdateDt(object obj)
         {
-            
+
             while (MaxThreads < 0)
             {
                 Thread.Sleep(10);
@@ -271,11 +312,13 @@ namespace EVE_Planetary
                         MainPricesDT.Rows[curRow]["Buy(max)"] = Bmax;
                         MainPricesDT.Rows[curRow]["Buy(avg)"] = Bavg;
                         MainPricesDT.Rows[curRow]["Buy(median)"] = Bmed;
+                        MainPricesDT.Rows[curRow]["Buy(self)"] = MainPricesDT.Rows[curRow]["Buy(self)"].ToString() == "" ? 0 : MainPricesDT.Rows[curRow]["Buy(self)"];
 
                         MainPricesDT.Rows[curRow]["Sell(min)"] = Smin;
                         MainPricesDT.Rows[curRow]["Sell(max)"] = Smax;
                         MainPricesDT.Rows[curRow]["Sell(avg)"] = Savg;
                         MainPricesDT.Rows[curRow]["Sell(median)"] = Smed;
+                        MainPricesDT.Rows[curRow]["Sell(self)"] = MainPricesDT.Rows[curRow]["Sell(self)"].ToString() == "" ? 0 : MainPricesDT.Rows[curRow]["Sell(self)"];
 
                         /*Invoke((MethodInvoker)delegate
                         {*/
@@ -312,7 +355,20 @@ namespace EVE_Planetary
                 {
                     if (table.TableName == "Materials")
                     {
+                        MainPricesDT = CreatePriceTable();
                         MainPricesDT = table;
+                        /*
+                        MainPricesDT.Columns["Buy(min)"].DataType = typeof(double);
+                        MainPricesDT.Columns["Buy(max)"].DataType = typeof(double);
+                        MainPricesDT.Columns["Buy(avg)"].DataType = typeof(double);
+                        MainPricesDT.Columns["Buy(median)"].DataType = typeof(double);
+                        MainPricesDT.Columns["Buy(self)"].DataType = typeof(double);
+
+                        MainPricesDT.Columns["Sell(min)"].DataType = typeof(double);
+                        MainPricesDT.Columns["Sell(max)"].DataType = typeof(double);
+                        MainPricesDT.Columns["Sell(avg)"].DataType = typeof(double);
+                        MainPricesDT.Columns["Sell(median)"].DataType = typeof(double);
+                        MainPricesDT.Columns["Sell(self)"].DataType = typeof(double);*/
                     }
                 }
             }
@@ -328,7 +384,7 @@ namespace EVE_Planetary
         {
             DGVPrices.DataSource = null;
             int totalRows = MainPricesDT.Rows.Count - 1;
-            ProgressBarPrice.Maximum = totalRows+1;
+            ProgressBarPrice.Maximum = totalRows + 1;
             ProgressBarPrice.Minimum = 0;
             ProgressBarPrice.Value = 0;
             for (int i = totalRows; i >= 0; i--)
@@ -353,7 +409,7 @@ namespace EVE_Planetary
         private void SaveBttn_Click(object sender, EventArgs e)
         {
             if (File.Exists(@"Resources/elements.xml")) File.Delete(@"Resources/elements.xml");
-            MainPricesDT.WriteXml(@"Resources/elements.xml");
+            MainPricesDT.WriteXml(@"Resources/elements.xml",XmlWriteMode.WriteSchema);
         }
 
         private void ShowPriceDGV()
@@ -362,6 +418,25 @@ namespace EVE_Planetary
             DGVPrices.Columns["ID"].DefaultCellStyle = new DataGridViewCellStyle { Format = "N0" };
             DGVPrices.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             DGVPrices.Show();
+        }
+
+        private void CalcBuySellFinder_Click(object sender, EventArgs e)
+        {
+            DGVCalcBuySell.DataSource = null;
+            if (MainPricesDT.Select("[" + comboCalcSell.Text + "] < [" + comboCalcBuy.Text + "] AND" + "[" + comboCalcSell.Text + "]>0").Count()>0)
+            {
+
+                DataTable mostgoodprices = MainPricesDT.Select("[" + comboCalcSell.Text + "] < [" + comboCalcBuy.Text + "] AND" + "[" + comboCalcSell.Text + "]>0").CopyToDataTable();
+                DataColumn colNew = new DataColumn();
+                colNew.DataType = typeof(double);
+                colNew.ColumnName = "Profit";
+                mostgoodprices.Columns.Add(colNew);
+                for (int i = 0; i < mostgoodprices.Rows.Count; i++)
+                {
+                    mostgoodprices.Rows[i]["Profit"] = (Convert.ToDouble(mostgoodprices.Rows[i][comboCalcBuy.Text].ToString()) - Convert.ToDouble(mostgoodprices.Rows[i][comboCalcSell.Text].ToString())) / Convert.ToDouble(mostgoodprices.Rows[i][comboCalcSell.Text]) * 100;
+                }
+                DGVCalcBuySell.DataSource = mostgoodprices;
+            }
         }
     }
 }

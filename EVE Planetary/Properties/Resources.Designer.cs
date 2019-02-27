@@ -59,24 +59,5 @@ namespace EVE_Planetary.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;friends&gt;
-        ///  &lt;friend id=&quot;1&quot;&gt;
-        ///    &lt;name&gt;Александр&lt;/name&gt;
-        ///    &lt;age&gt;25&lt;/age&gt;
-        ///  &lt;/friend&gt;
-        ///  &lt;friend id=&quot;2&quot;&gt;
-        ///    &lt;name&gt;Николай&lt;/name&gt;
-        ///    &lt;age&gt;26&lt;/age&gt;
-        ///  &lt;/friend&gt;
-        ///&lt;/friends&gt;.
-        /// </summary>
-        internal static string elements {
-            get {
-                return ResourceManager.GetString("elements", resourceCulture);
-            }
-        }
     }
 }
