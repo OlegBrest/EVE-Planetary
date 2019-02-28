@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -22,6 +23,8 @@ namespace EVE_Planetary
         Dictionary<string, int> PriceKeys = new Dictionary<string, int>();
         int MaxThreads = 20;
         int PageSize = 150;
+        XmlNode CurrentNode;
+        XmlDocument xmlBPRDoc;
         struct ThreadStrInt
         {
             public string _str { get; set; }
@@ -353,18 +356,6 @@ namespace EVE_Planetary
                     {
                         MainPricesDT = CreatePriceTable();
                         MainPricesDT = table;
-                        /*
-                        MainPricesDT.Columns["Buy(min)"].DataType = typeof(double);
-                        MainPricesDT.Columns["Buy(max)"].DataType = typeof(double);
-                        MainPricesDT.Columns["Buy(avg)"].DataType = typeof(double);
-                        MainPricesDT.Columns["Buy(median)"].DataType = typeof(double);
-                        MainPricesDT.Columns["Buy(self)"].DataType = typeof(double);
-
-                        MainPricesDT.Columns["Sell(min)"].DataType = typeof(double);
-                        MainPricesDT.Columns["Sell(max)"].DataType = typeof(double);
-                        MainPricesDT.Columns["Sell(avg)"].DataType = typeof(double);
-                        MainPricesDT.Columns["Sell(median)"].DataType = typeof(double);
-                        MainPricesDT.Columns["Sell(self)"].DataType = typeof(double);*/
                     }
                 }
             }
@@ -443,35 +434,50 @@ namespace EVE_Planetary
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (textBoxFormManufInputName.Text != "")
+            {
+                CurrentNode.Attributes["Name"].Value = textBoxFormManufInputName.Text;
+                CurrentNode.Attributes["id"].Value = textBoxFormManufInputID.Text;
+                CurrentNode.Attributes["count"].Value = textBoxFormManufInputCount.Text;
+            }
+
             if (File.Exists(@"Resources/BPRs.xml")) File.Delete(@"Resources/BPRs.xml");
-            BPRTable.WriteXml(@"Resources/BPRs.xml", XmlWriteMode.WriteSchema);
+            CurrentNode.OwnerDocument.Save(@"Resources/BPRs.xml");
+            LoadBPRXML();
+            /*if (File.Exists(@"Resources/BPRs.xml")) File.Delete(@"Resources/BPRs.xml");
+            BPRTable.WriteXml(@"Resources/BPRs.xml", XmlWriteMode.WriteSchema);*/
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            LoadBPRXML();
+        }
+
+        private void LoadBPRXML()
+        {
             if (File.Exists(@"Resources/BPRs.xml"))
             {
-                XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.Load(@"Resources/BPRs.xml");
+                xmlBPRDoc = new XmlDocument();
+                xmlBPRDoc.Load(@"Resources/BPRs.xml");
                 treeViewFormManuf.Nodes.Clear();
                 treeViewFormManuf.Nodes.Add(new TreeNode("BluePrints"));
                 TreeNode rootNode = new TreeNode();
                 rootNode = treeViewFormManuf.Nodes[0];
-                AddNode(xmlDoc.DocumentElement.SelectSingleNode("/BPRs/B"), rootNode);
+                AddNode(xmlBPRDoc.DocumentElement.SelectSingleNode("/BPRs/B"), rootNode);
 
                 treeViewFormPlanet.Nodes.Clear();
                 treeViewFormPlanet.Nodes.Add(new TreeNode("Schematics"));
                 rootNode = treeViewFormPlanet.Nodes[0];
-                AddNode(xmlDoc.DocumentElement.SelectSingleNode("/BPRs/P"), rootNode);
+                AddNode(xmlBPRDoc.DocumentElement.SelectSingleNode("/BPRs/P"), rootNode);
 
                 treeViewFormReact.Nodes.Clear();
                 treeViewFormReact.Nodes.Add(new TreeNode("Reactions"));
                 rootNode = treeViewFormReact.Nodes[0];
-                AddNode(xmlDoc.DocumentElement.SelectSingleNode("/BPRs/R"), rootNode);
+                AddNode(xmlBPRDoc.DocumentElement.SelectSingleNode("/BPRs/R"), rootNode);
 
-                treeViewFormManuf.CollapseAll();
+                /*treeViewFormManuf.CollapseAll();
                 treeViewFormPlanet.CollapseAll();
-                treeViewFormReact.CollapseAll();
+                treeViewFormReact.CollapseAll();*/
             }
         }
 
@@ -614,15 +620,14 @@ namespace EVE_Planetary
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(@"Resources/BPRs.xml");
             string Name = "/BPRs/B" + GetAllParent(e.Node);
-            //Name +=  e.Node.Name;            
-            XmlNode node = xmlDoc.DocumentElement.SelectNodes(Name)[e.Node.Index];
+            CurrentNode = xmlDoc.DocumentElement.SelectNodes(Name)[e.Node.Index];
             textBoxFormManufInputName.Text = "";
             textBoxFormManufInputCount.Text = "";
-            if (node != null)
+            if (CurrentNode != null)
             {
                 XmlAttributeCollection atrCol;
-                atrCol = node.Attributes;
-                if (node.Name == "B")
+                atrCol = CurrentNode.Attributes;
+                if (CurrentNode.Name == "B")
                 {
                     textBoxFormManufBPName.Text = "";
                     textBoxFormManufOutName.Text = "";
@@ -632,9 +637,9 @@ namespace EVE_Planetary
                     textBoxFormManufInputID.Text = "";
                     textBoxFormManufInputCount.Text = "";
                 }
-                if (node.Name == "BPR")
+                if (CurrentNode.Name == "BPR")
                 {
-                    textBoxFormManufBPName.Text = node.Attributes["Name"].Value.ToString();
+                    textBoxFormManufBPName.Text = CurrentNode.Attributes["Name"].Value.ToString();
                     textBoxFormManufOutName.Text = "";
                     textBoxFormManufOutID.Text = "";
                     textBoxFormManufOutCount.Text = "";
@@ -642,20 +647,20 @@ namespace EVE_Planetary
                     textBoxFormManufInputID.Text = "";
                     textBoxFormManufInputCount.Text = "";
                 }
-                if (node.Name == "Out")
+                if (CurrentNode.Name == "Out")
                 {
-                    textBoxFormManufOutName.Text = node.Attributes["Name"].Value.ToString();
-                    textBoxFormManufOutID.Text = node.Attributes["id"].Value.ToString();
-                    textBoxFormManufOutCount.Text = node.Attributes["count"].Value.ToString();
+                    textBoxFormManufOutName.Text = CurrentNode.Attributes["Name"].Value.ToString();
+                    textBoxFormManufOutID.Text = CurrentNode.Attributes["id"].Value.ToString();
+                    textBoxFormManufOutCount.Text = CurrentNode.Attributes["count"].Value.ToString();
                     textBoxFormManufInputName.Text = "";
                     textBoxFormManufInputID.Text = "";
                     textBoxFormManufInputCount.Text = "";
                 }
-                if (node.Name == "In")
+                if (CurrentNode.Name == "In")
                 {
-                    textBoxFormManufInputName.Text = node.Attributes["Name"].Value.ToString();
-                    textBoxFormManufInputID.Text = node.Attributes["id"].Value.ToString();
-                    textBoxFormManufInputCount.Text = node.Attributes["count"].Value.ToString();
+                    textBoxFormManufInputName.Text = CurrentNode.Attributes["Name"].Value.ToString();
+                    textBoxFormManufInputID.Text = CurrentNode.Attributes["id"].Value.ToString();
+                    textBoxFormManufInputCount.Text = CurrentNode.Attributes["count"].Value.ToString();
                 }
             }
         }
@@ -669,6 +674,33 @@ namespace EVE_Planetary
             }
             if (node.Name != "") result += ("/" + node.Name);
             return result;
+        }
+
+        private void textBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+
+            if (textBox.AutoCompleteCustomSource.Count == 0)
+            {
+                DataRow[] dataRows = MainPricesDT.Select("Name <> ''", "Name");
+                AutoCompleteStringCollection customsource = new AutoCompleteStringCollection();
+                foreach (DataRow dr in dataRows)
+                {
+                    customsource.Add(dr["Name"].ToString());
+                }
+                textBox.AutoCompleteCustomSource = customsource;
+            }
+        }
+
+        private void textBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            //textBox.AutoCompleteCustomSource.Clear();
+            DataRow[] dataRows = MainPricesDT.Select("Name = '" + textBox.Text + "'", "Name");
+            if (dataRows.Count() > 0)
+                (this.Controls.Find(textBox.Tag.ToString(), true)[0] as TextBox).Text = dataRows[0]["Id"].ToString();
+            else
+                (this.Controls.Find(textBox.Tag.ToString(), true)[0] as TextBox).Text = "";
         }
     }
 }
