@@ -30,13 +30,6 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Count");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Material", new System.Windows.Forms.TreeNode[] {
-            treeNode1});
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Name", new System.Windows.Forms.TreeNode[] {
-            treeNode2});
             this.TabControlMain = new System.Windows.Forms.TabControl();
             this.tabPrice = new System.Windows.Forms.TabPage();
             this.splitPrices = new System.Windows.Forms.SplitContainer();
@@ -48,21 +41,12 @@
             this.TabControlFormulas = new System.Windows.Forms.TabControl();
             this.tabPageManuf = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             this.tabPagePlanet = new System.Windows.Forms.TabPage();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.treeViewFormPlanet = new System.Windows.Forms.TreeView();
             this.tabPageReact = new System.Windows.Forms.TabPage();
-            this.splitContainer4 = new System.Windows.Forms.SplitContainer();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
             this.tabCalc = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.TabCalcBuySell = new System.Windows.Forms.TabPage();
@@ -77,7 +61,25 @@
             this.TabCalcPlanet = new System.Windows.Forms.TabPage();
             this.TabCalcReact = new System.Windows.Forms.TabPage();
             this.ProgressBarPrice = new System.Windows.Forms.ProgressBar();
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.splitContainer5 = new System.Windows.Forms.SplitContainer();
+            this.treeViewFormManuf = new System.Windows.Forms.TreeView();
+            this.splitContainer4 = new System.Windows.Forms.SplitContainer();
+            this.treeViewFormReact = new System.Windows.Forms.TreeView();
+            this.panelFormulas = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxFormManufBPName = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBoxFormManufOutName = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBoxFormManufOutCount = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBoxFormManufOutID = new System.Windows.Forms.TextBox();
+            this.textBoxFormManufInputName = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.textBoxFormManufInputID = new System.Windows.Forms.TextBox();
+            this.textBoxFormManufInputCount = new System.Windows.Forms.TextBox();
             this.TabControlMain.SuspendLayout();
             this.tabPrice.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitPrices)).BeginInit();
@@ -92,18 +94,11 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPagePlanet.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
-            this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
             this.tabPageReact.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
-            this.splitContainer4.Panel1.SuspendLayout();
-            this.splitContainer4.Panel2.SuspendLayout();
-            this.splitContainer4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.tabCalc.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.TabCalcBuySell.SuspendLayout();
@@ -112,6 +107,14 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVCalcBuySell)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
+            this.splitContainer5.Panel1.SuspendLayout();
+            this.splitContainer5.Panel2.SuspendLayout();
+            this.splitContainer5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
+            this.splitContainer4.Panel1.SuspendLayout();
+            this.splitContainer4.SuspendLayout();
+            this.panelFormulas.SuspendLayout();
             this.SuspendLayout();
             // 
             // TabControlMain
@@ -216,7 +219,7 @@
             // 
             // tabWorks
             // 
-            this.tabWorks.Controls.Add(this.TabControlFormulas);
+            this.tabWorks.Controls.Add(this.splitContainer2);
             this.tabWorks.Location = new System.Drawing.Point(4, 22);
             this.tabWorks.Name = "tabWorks";
             this.tabWorks.Padding = new System.Windows.Forms.Padding(3);
@@ -231,18 +234,18 @@
             this.TabControlFormulas.Controls.Add(this.tabPagePlanet);
             this.TabControlFormulas.Controls.Add(this.tabPageReact);
             this.TabControlFormulas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TabControlFormulas.Location = new System.Drawing.Point(3, 3);
+            this.TabControlFormulas.Location = new System.Drawing.Point(0, 0);
             this.TabControlFormulas.Name = "TabControlFormulas";
             this.TabControlFormulas.SelectedIndex = 0;
-            this.TabControlFormulas.Size = new System.Drawing.Size(786, 418);
+            this.TabControlFormulas.Size = new System.Drawing.Size(786, 360);
             this.TabControlFormulas.TabIndex = 0;
             // 
             // tabPageManuf
             // 
-            this.tabPageManuf.Controls.Add(this.splitContainer2);
+            this.tabPageManuf.Controls.Add(this.splitContainer5);
             this.tabPageManuf.Location = new System.Drawing.Point(4, 22);
             this.tabPageManuf.Name = "tabPageManuf";
-            this.tabPageManuf.Size = new System.Drawing.Size(778, 392);
+            this.tabPageManuf.Size = new System.Drawing.Size(778, 334);
             this.tabPageManuf.TabIndex = 0;
             this.tabPageManuf.Text = "Manufacturing";
             this.tabPageManuf.UseVisualStyleBackColor = true;
@@ -251,82 +254,51 @@
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Location = new System.Drawing.Point(3, 3);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.dataGridView1);
+            this.splitContainer2.Panel1.Controls.Add(this.TabControlFormulas);
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.button1);
             this.splitContainer2.Panel2.Controls.Add(this.button2);
-            this.splitContainer2.Panel2.Controls.Add(this.button3);
-            this.splitContainer2.Size = new System.Drawing.Size(778, 392);
-            this.splitContainer2.SplitterDistance = 334;
+            this.splitContainer2.Size = new System.Drawing.Size(786, 418);
+            this.splitContainer2.SplitterDistance = 360;
             this.splitContainer2.TabIndex = 2;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = null;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(778, 334);
-            this.dataGridView1.TabIndex = 0;
             // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.Transparent;
             this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(191, 7);
+            this.button1.Location = new System.Drawing.Point(3, 242);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(88, 31);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Save Prices";
+            this.button1.Text = "Add/Edit";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
             this.button2.BackColor = System.Drawing.Color.Transparent;
             this.button2.ForeColor = System.Drawing.Color.Black;
-            this.button2.Location = new System.Drawing.Point(97, 7);
+            this.button2.Location = new System.Drawing.Point(5, 7);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(88, 31);
             this.button2.TabIndex = 0;
-            this.button2.Text = "Clear Empty";
+            this.button2.Text = "Load Formulas";
             this.button2.UseVisualStyleBackColor = false;
-            // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.Color.Transparent;
-            this.button3.ForeColor = System.Drawing.Color.Black;
-            this.button3.Location = new System.Drawing.Point(3, 7);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(88, 31);
-            this.button3.TabIndex = 0;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // tabPagePlanet
             // 
             this.tabPagePlanet.Controls.Add(this.splitContainer3);
             this.tabPagePlanet.Location = new System.Drawing.Point(4, 22);
             this.tabPagePlanet.Name = "tabPagePlanet";
-            this.tabPagePlanet.Size = new System.Drawing.Size(778, 392);
+            this.tabPagePlanet.Size = new System.Drawing.Size(778, 334);
             this.tabPagePlanet.TabIndex = 1;
             this.tabPagePlanet.Text = "Planetology";
             this.tabPagePlanet.UseVisualStyleBackColor = true;
@@ -337,137 +309,33 @@
             this.splitContainer3.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitContainer3.Location = new System.Drawing.Point(0, 0);
             this.splitContainer3.Name = "splitContainer3";
-            this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer3.Panel1
             // 
-            this.splitContainer3.Panel1.Controls.Add(this.treeView1);
-            // 
-            // splitContainer3.Panel2
-            // 
-            this.splitContainer3.Panel2.Controls.Add(this.button4);
-            this.splitContainer3.Panel2.Controls.Add(this.button5);
-            this.splitContainer3.Panel2.Controls.Add(this.button6);
-            this.splitContainer3.Size = new System.Drawing.Size(778, 392);
-            this.splitContainer3.SplitterDistance = 334;
+            this.splitContainer3.Panel1.Controls.Add(this.treeViewFormPlanet);
+            this.splitContainer3.Size = new System.Drawing.Size(778, 334);
+            this.splitContainer3.SplitterDistance = 500;
             this.splitContainer3.TabIndex = 2;
             // 
-            // button4
+            // treeViewFormPlanet
             // 
-            this.button4.BackColor = System.Drawing.Color.Transparent;
-            this.button4.ForeColor = System.Drawing.Color.Black;
-            this.button4.Location = new System.Drawing.Point(191, 7);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(88, 31);
-            this.button4.TabIndex = 0;
-            this.button4.Text = "Save Prices";
-            this.button4.UseVisualStyleBackColor = false;
-            // 
-            // button5
-            // 
-            this.button5.BackColor = System.Drawing.Color.Transparent;
-            this.button5.ForeColor = System.Drawing.Color.Black;
-            this.button5.Location = new System.Drawing.Point(97, 7);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(88, 31);
-            this.button5.TabIndex = 0;
-            this.button5.Text = "Clear Empty";
-            this.button5.UseVisualStyleBackColor = false;
-            // 
-            // button6
-            // 
-            this.button6.BackColor = System.Drawing.Color.Transparent;
-            this.button6.ForeColor = System.Drawing.Color.Black;
-            this.button6.Location = new System.Drawing.Point(3, 7);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(88, 31);
-            this.button6.TabIndex = 0;
-            this.button6.Text = "button6";
-            this.button6.UseVisualStyleBackColor = false;
+            this.treeViewFormPlanet.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewFormPlanet.HotTracking = true;
+            this.treeViewFormPlanet.LabelEdit = true;
+            this.treeViewFormPlanet.Location = new System.Drawing.Point(0, 0);
+            this.treeViewFormPlanet.Name = "treeViewFormPlanet";
+            this.treeViewFormPlanet.Size = new System.Drawing.Size(500, 334);
+            this.treeViewFormPlanet.TabIndex = 0;
             // 
             // tabPageReact
             // 
             this.tabPageReact.Controls.Add(this.splitContainer4);
             this.tabPageReact.Location = new System.Drawing.Point(4, 22);
             this.tabPageReact.Name = "tabPageReact";
-            this.tabPageReact.Size = new System.Drawing.Size(778, 392);
+            this.tabPageReact.Size = new System.Drawing.Size(778, 334);
             this.tabPageReact.TabIndex = 2;
             this.tabPageReact.Text = "Reaction";
             this.tabPageReact.UseVisualStyleBackColor = true;
-            // 
-            // splitContainer4
-            // 
-            this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer4.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.splitContainer4.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer4.Name = "splitContainer4";
-            this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer4.Panel1
-            // 
-            this.splitContainer4.Panel1.Controls.Add(this.dataGridView3);
-            // 
-            // splitContainer4.Panel2
-            // 
-            this.splitContainer4.Panel2.Controls.Add(this.button7);
-            this.splitContainer4.Panel2.Controls.Add(this.button8);
-            this.splitContainer4.Panel2.Controls.Add(this.button9);
-            this.splitContainer4.Size = new System.Drawing.Size(778, 392);
-            this.splitContainer4.SplitterDistance = 334;
-            this.splitContainer4.TabIndex = 2;
-            // 
-            // dataGridView3
-            // 
-            this.dataGridView3.AllowUserToAddRows = false;
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = null;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView3.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView3.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.Size = new System.Drawing.Size(778, 334);
-            this.dataGridView3.TabIndex = 0;
-            // 
-            // button7
-            // 
-            this.button7.BackColor = System.Drawing.Color.Transparent;
-            this.button7.ForeColor = System.Drawing.Color.Black;
-            this.button7.Location = new System.Drawing.Point(191, 7);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(88, 31);
-            this.button7.TabIndex = 0;
-            this.button7.Text = "Save Prices";
-            this.button7.UseVisualStyleBackColor = false;
-            // 
-            // button8
-            // 
-            this.button8.BackColor = System.Drawing.Color.Transparent;
-            this.button8.ForeColor = System.Drawing.Color.Black;
-            this.button8.Location = new System.Drawing.Point(97, 7);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(88, 31);
-            this.button8.TabIndex = 0;
-            this.button8.Text = "Clear Empty";
-            this.button8.UseVisualStyleBackColor = false;
-            // 
-            // button9
-            // 
-            this.button9.BackColor = System.Drawing.Color.Transparent;
-            this.button9.ForeColor = System.Drawing.Color.Black;
-            this.button9.Location = new System.Drawing.Point(3, 7);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(88, 31);
-            this.button9.TabIndex = 0;
-            this.button9.Text = "button9";
-            this.button9.UseVisualStyleBackColor = false;
             // 
             // tabCalc
             // 
@@ -531,16 +399,16 @@
             // 
             this.DGVCalcBuySell.AllowUserToAddRows = false;
             this.DGVCalcBuySell.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.Format = "N2";
-            dataGridViewCellStyle4.NullValue = null;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DGVCalcBuySell.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = null;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DGVCalcBuySell.DefaultCellStyle = dataGridViewCellStyle2;
             this.DGVCalcBuySell.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DGVCalcBuySell.Location = new System.Drawing.Point(0, 0);
             this.DGVCalcBuySell.Name = "DGVCalcBuySell";
@@ -643,23 +511,197 @@
             this.ProgressBarPrice.Size = new System.Drawing.Size(800, 10);
             this.ProgressBarPrice.TabIndex = 1;
             // 
-            // treeView1
+            // splitContainer5
             // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.HotTracking = true;
-            this.treeView1.LabelEdit = true;
-            this.treeView1.Location = new System.Drawing.Point(0, 0);
-            this.treeView1.Name = "treeView1";
-            treeNode1.Name = "CounNode";
-            treeNode1.Text = "Count";
-            treeNode2.Name = "MaterialNode";
-            treeNode2.Text = "Material";
-            treeNode3.Name = "NameNode";
-            treeNode3.Text = "Name";
-            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3});
-            this.treeView1.Size = new System.Drawing.Size(778, 334);
-            this.treeView1.TabIndex = 0;
+            this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer5.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer5.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer5.Name = "splitContainer5";
+            // 
+            // splitContainer5.Panel1
+            // 
+            this.splitContainer5.Panel1.Controls.Add(this.treeViewFormManuf);
+            // 
+            // splitContainer5.Panel2
+            // 
+            this.splitContainer5.Panel2.Controls.Add(this.panelFormulas);
+            this.splitContainer5.Size = new System.Drawing.Size(778, 334);
+            this.splitContainer5.SplitterDistance = 524;
+            this.splitContainer5.TabIndex = 3;
+            // 
+            // treeViewFormManuf
+            // 
+            this.treeViewFormManuf.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewFormManuf.HotTracking = true;
+            this.treeViewFormManuf.LabelEdit = true;
+            this.treeViewFormManuf.Location = new System.Drawing.Point(0, 0);
+            this.treeViewFormManuf.Name = "treeViewFormManuf";
+            this.treeViewFormManuf.Size = new System.Drawing.Size(524, 334);
+            this.treeViewFormManuf.TabIndex = 0;
+            this.treeViewFormManuf.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewFormManuf_NodeMouseClick);
+            // 
+            // splitContainer4
+            // 
+            this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer4.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer4.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer4.Name = "splitContainer4";
+            // 
+            // splitContainer4.Panel1
+            // 
+            this.splitContainer4.Panel1.Controls.Add(this.treeViewFormReact);
+            this.splitContainer4.Size = new System.Drawing.Size(778, 334);
+            this.splitContainer4.SplitterDistance = 441;
+            this.splitContainer4.TabIndex = 3;
+            // 
+            // treeViewFormReact
+            // 
+            this.treeViewFormReact.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewFormReact.HotTracking = true;
+            this.treeViewFormReact.LabelEdit = true;
+            this.treeViewFormReact.Location = new System.Drawing.Point(0, 0);
+            this.treeViewFormReact.Name = "treeViewFormReact";
+            this.treeViewFormReact.Size = new System.Drawing.Size(441, 334);
+            this.treeViewFormReact.TabIndex = 0;
+            // 
+            // panelFormulas
+            // 
+            this.panelFormulas.Controls.Add(this.button1);
+            this.panelFormulas.Controls.Add(this.textBoxFormManufInputCount);
+            this.panelFormulas.Controls.Add(this.textBoxFormManufOutCount);
+            this.panelFormulas.Controls.Add(this.textBoxFormManufInputID);
+            this.panelFormulas.Controls.Add(this.textBoxFormManufOutID);
+            this.panelFormulas.Controls.Add(this.textBoxFormManufOutName);
+            this.panelFormulas.Controls.Add(this.textBoxFormManufInputName);
+            this.panelFormulas.Controls.Add(this.label7);
+            this.panelFormulas.Controls.Add(this.textBoxFormManufBPName);
+            this.panelFormulas.Controls.Add(this.label6);
+            this.panelFormulas.Controls.Add(this.label5);
+            this.panelFormulas.Controls.Add(this.label3);
+            this.panelFormulas.Controls.Add(this.label4);
+            this.panelFormulas.Controls.Add(this.label2);
+            this.panelFormulas.Controls.Add(this.label1);
+            this.panelFormulas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelFormulas.Location = new System.Drawing.Point(0, 0);
+            this.panelFormulas.Name = "panelFormulas";
+            this.panelFormulas.Size = new System.Drawing.Size(250, 334);
+            this.panelFormulas.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 1);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(52, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "BP Name";
+            // 
+            // textBoxFormManufBPName
+            // 
+            this.textBoxFormManufBPName.Location = new System.Drawing.Point(2, 17);
+            this.textBoxFormManufBPName.Name = "textBoxFormManufBPName";
+            this.textBoxFormManufBPName.Size = new System.Drawing.Size(247, 20);
+            this.textBoxFormManufBPName.TabIndex = 1;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 40);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(67, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Output result";
+            // 
+            // textBoxFormManufOutName
+            // 
+            this.textBoxFormManufOutName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.textBoxFormManufOutName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.textBoxFormManufOutName.Location = new System.Drawing.Point(2, 56);
+            this.textBoxFormManufOutName.Name = "textBoxFormManufOutName";
+            this.textBoxFormManufOutName.Size = new System.Drawing.Size(247, 20);
+            this.textBoxFormManufOutName.TabIndex = 1;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 105);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(69, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Output count";
+            // 
+            // textBoxFormManufOutCount
+            // 
+            this.textBoxFormManufOutCount.Location = new System.Drawing.Point(78, 102);
+            this.textBoxFormManufOutCount.Name = "textBoxFormManufOutCount";
+            this.textBoxFormManufOutCount.Size = new System.Drawing.Size(171, 20);
+            this.textBoxFormManufOutCount.TabIndex = 1;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 137);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(71, 13);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Input Material";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(3, 79);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(53, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Output ID";
+            // 
+            // textBoxFormManufOutID
+            // 
+            this.textBoxFormManufOutID.Location = new System.Drawing.Point(62, 76);
+            this.textBoxFormManufOutID.Name = "textBoxFormManufOutID";
+            this.textBoxFormManufOutID.Size = new System.Drawing.Size(187, 20);
+            this.textBoxFormManufOutID.TabIndex = 1;
+            // 
+            // textBoxFormManufInputName
+            // 
+            this.textBoxFormManufInputName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.textBoxFormManufInputName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.textBoxFormManufInputName.Location = new System.Drawing.Point(2, 153);
+            this.textBoxFormManufInputName.Name = "textBoxFormManufInputName";
+            this.textBoxFormManufInputName.Size = new System.Drawing.Size(247, 20);
+            this.textBoxFormManufInputName.TabIndex = 1;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 208);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(61, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Input count";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(3, 182);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(45, 13);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Input ID";
+            // 
+            // textBoxFormManufInputID
+            // 
+            this.textBoxFormManufInputID.Location = new System.Drawing.Point(62, 179);
+            this.textBoxFormManufInputID.Name = "textBoxFormManufInputID";
+            this.textBoxFormManufInputID.Size = new System.Drawing.Size(187, 20);
+            this.textBoxFormManufInputID.TabIndex = 1;
+            // 
+            // textBoxFormManufInputCount
+            // 
+            this.textBoxFormManufInputCount.Location = new System.Drawing.Point(78, 205);
+            this.textBoxFormManufInputCount.Name = "textBoxFormManufInputCount";
+            this.textBoxFormManufInputCount.Size = new System.Drawing.Size(171, 20);
+            this.textBoxFormManufInputCount.TabIndex = 1;
             // 
             // MainForm
             // 
@@ -685,18 +727,11 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabPagePlanet.ResumeLayout(false);
             this.splitContainer3.Panel1.ResumeLayout(false);
-            this.splitContainer3.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
             this.tabPageReact.ResumeLayout(false);
-            this.splitContainer4.Panel1.ResumeLayout(false);
-            this.splitContainer4.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
-            this.splitContainer4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.tabCalc.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
             this.TabCalcBuySell.ResumeLayout(false);
@@ -706,6 +741,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGVCalcBuySell)).EndInit();
+            this.splitContainer5.Panel1.ResumeLayout(false);
+            this.splitContainer5.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
+            this.splitContainer5.ResumeLayout(false);
+            this.splitContainer4.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
+            this.splitContainer4.ResumeLayout(false);
+            this.panelFormulas.ResumeLayout(false);
+            this.panelFormulas.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -737,22 +781,31 @@
         private System.Windows.Forms.TabPage tabPagePlanet;
         private System.Windows.Forms.TabPage tabPageReact;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.SplitContainer splitContainer3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.SplitContainer splitContainer4;
-        private System.Windows.Forms.DataGridView dataGridView3;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button9;
         private System.Windows.Forms.TabPage TabCalcPlanet;
         private System.Windows.Forms.TabPage TabCalcReact;
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TreeView treeViewFormPlanet;
+        private System.Windows.Forms.SplitContainer splitContainer5;
+        private System.Windows.Forms.TreeView treeViewFormManuf;
+        private System.Windows.Forms.SplitContainer splitContainer4;
+        private System.Windows.Forms.TreeView treeViewFormReact;
+        private System.Windows.Forms.Panel panelFormulas;
+        private System.Windows.Forms.TextBox textBoxFormManufInputCount;
+        private System.Windows.Forms.TextBox textBoxFormManufOutCount;
+        private System.Windows.Forms.TextBox textBoxFormManufInputID;
+        private System.Windows.Forms.TextBox textBoxFormManufOutID;
+        private System.Windows.Forms.TextBox textBoxFormManufOutName;
+        private System.Windows.Forms.TextBox textBoxFormManufInputName;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox textBoxFormManufBPName;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }
 

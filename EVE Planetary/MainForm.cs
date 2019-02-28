@@ -75,35 +75,31 @@ namespace EVE_Planetary
         private DataTable CreateBPRTable()
         {
             DataTable dt = new DataTable("BPRs");
-            DataColumn colID = new DataColumn("ID", typeof(Int32));
-            DataColumn colName = new DataColumn("Name", typeof(String));
+            DataColumn type = new DataColumn("Type", typeof(string));
 
-            DataColumn colBuyMin = new DataColumn("Buy(min)", typeof(double));
-            DataColumn colBuyMedian = new DataColumn("Buy(median)", typeof(double));
-            DataColumn colBuyAvg = new DataColumn("Buy(avg)", typeof(double));
-            DataColumn colBuyMax = new DataColumn("Buy(max)", typeof(double));
-            DataColumn colBuySelf = new DataColumn("Buy(self)", typeof(double));
+            DataColumn colID = new DataColumn("ID_BPR", typeof(Int32));
+            DataColumn colName = new DataColumn("Name_BPR", typeof(String));
 
-            DataColumn colSellMin = new DataColumn("Sell(min)", typeof(double));
-            DataColumn colSellMedian = new DataColumn("Sell(median)", typeof(double));
-            DataColumn colSellAvg = new DataColumn("Sell(avg)", typeof(double));
-            DataColumn colSellMax = new DataColumn("Sell(max)", typeof(double));
-            DataColumn colSellSelf = new DataColumn("Sell(self)", typeof(double));
+            DataColumn outID = new DataColumn("ID_out", typeof(Int32));
+            DataColumn outName = new DataColumn("Name_out", typeof(String));
+            DataColumn outCount = new DataColumn("Count_out", typeof(double));
 
+            DataColumn inID = new DataColumn("ID_in", typeof(Int32));
+            DataColumn inName = new DataColumn("Name_in", typeof(String));
+            DataColumn inCount = new DataColumn("Count_in", typeof(double));
+
+            dt.Columns.Add(type);
             dt.Columns.Add(colID);
             dt.Columns.Add(colName);
 
-            dt.Columns.Add(colBuyMin);
-            dt.Columns.Add(colBuyMedian);
-            dt.Columns.Add(colBuyAvg);
-            dt.Columns.Add(colBuyMax);
-            dt.Columns.Add(colBuySelf);
+            dt.Columns.Add(outID);
+            dt.Columns.Add(outName);
+            dt.Columns.Add(outCount);
 
-            dt.Columns.Add(colSellMin);
-            dt.Columns.Add(colSellMedian);
-            dt.Columns.Add(colSellAvg);
-            dt.Columns.Add(colSellMax);
-            dt.Columns.Add(colSellSelf);
+            dt.Columns.Add(inID);
+            dt.Columns.Add(inName);
+            dt.Columns.Add(inCount);
+
 
             return dt;
         }
@@ -409,7 +405,7 @@ namespace EVE_Planetary
         private void SaveBttn_Click(object sender, EventArgs e)
         {
             if (File.Exists(@"Resources/elements.xml")) File.Delete(@"Resources/elements.xml");
-            MainPricesDT.WriteXml(@"Resources/elements.xml",XmlWriteMode.WriteSchema);
+            MainPricesDT.WriteXml(@"Resources/elements.xml", XmlWriteMode.WriteSchema);
         }
 
         private void ShowPriceDGV()
@@ -423,7 +419,7 @@ namespace EVE_Planetary
         private void CalcBuySellFinder_Click(object sender, EventArgs e)
         {
             DGVCalcBuySell.DataSource = null;
-            if (MainPricesDT.Select("[" + comboCalcSell.Text + "] < [" + comboCalcBuy.Text + "] AND" + "[" + comboCalcSell.Text + "]>0").Count()>0)
+            if (MainPricesDT.Select("[" + comboCalcSell.Text + "] < [" + comboCalcBuy.Text + "] AND" + "[" + comboCalcSell.Text + "]>0").Count() > 0)
             {
 
                 DataTable mostgoodprices = MainPricesDT.Select("[" + comboCalcSell.Text + "] < [" + comboCalcBuy.Text + "] AND" + "[" + comboCalcSell.Text + "]>0").CopyToDataTable();
@@ -437,6 +433,242 @@ namespace EVE_Planetary
                 }
                 DGVCalcBuySell.DataSource = mostgoodprices;
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            BPRTable = CreateBPRTable();
+            //DGVFormManuf.DataSource = BPRTable;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(@"Resources/BPRs.xml")) File.Delete(@"Resources/BPRs.xml");
+            BPRTable.WriteXml(@"Resources/BPRs.xml", XmlWriteMode.WriteSchema);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(@"Resources/BPRs.xml"))
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(@"Resources/BPRs.xml");
+                treeViewFormManuf.Nodes.Clear();
+                treeViewFormManuf.Nodes.Add(new TreeNode("BluePrints"));
+                TreeNode rootNode = new TreeNode();
+                rootNode = treeViewFormManuf.Nodes[0];
+                AddNode(xmlDoc.DocumentElement.SelectSingleNode("/BPRs/B"), rootNode);
+
+                treeViewFormPlanet.Nodes.Clear();
+                treeViewFormPlanet.Nodes.Add(new TreeNode("Schematics"));
+                rootNode = treeViewFormPlanet.Nodes[0];
+                AddNode(xmlDoc.DocumentElement.SelectSingleNode("/BPRs/P"), rootNode);
+
+                treeViewFormReact.Nodes.Clear();
+                treeViewFormReact.Nodes.Add(new TreeNode("Reactions"));
+                rootNode = treeViewFormReact.Nodes[0];
+                AddNode(xmlDoc.DocumentElement.SelectSingleNode("/BPRs/R"), rootNode);
+
+                treeViewFormManuf.CollapseAll();
+                treeViewFormPlanet.CollapseAll();
+                treeViewFormReact.CollapseAll();
+            }
+        }
+
+        private void AddNode(XmlNode inXmlNode, TreeNode inTreeNode)
+        {
+            XmlNode xNode;
+            TreeNode tNode;
+            XmlNodeList nodeList;
+            int i;
+            if (inXmlNode.HasChildNodes)
+            {
+                nodeList = inXmlNode.ChildNodes;
+                int nodsCount = nodeList.Count;
+                for (i = 0; i < nodsCount; i++)
+                {
+                    xNode = inXmlNode.ChildNodes[i];
+                    XmlAttributeCollection attributeCollection = xNode.Attributes;
+                    TreeNode treeNode = new TreeNode();
+                    treeNode.Name = xNode.Name;
+                    if (attributeCollection != null)
+                    {
+                        //проверяем наличие атрибута Name
+                        if (attributeCollection["Name"] != null)
+                        {
+                            treeNode.Text = attributeCollection["Name"].Value.ToString();
+                        }
+                        else
+                        {
+                            treeNode.Text = xNode.Name;
+                        }
+                        //проверяем наличие атрибута Name
+                        if (attributeCollection["count"] != null)
+                        {
+                            treeNode.Text += (" | " + attributeCollection["count"].Value.ToString());
+                        }
+                    }
+                    if (xNode.Name != "#text")
+                    {
+                        inTreeNode.Nodes.Add(treeNode);
+                        tNode = inTreeNode.Nodes[i];
+                        AddNode(xNode, tNode);
+                    }
+
+                }
+            }
+            else
+            {
+                inTreeNode.Text = (inXmlNode.OuterXml).Trim();
+            }
+        }
+
+        private DataTable ReadXmlBPR()
+        {
+            DataTable dt = null;
+            try
+            {
+                //загружаем xml файл
+                XDocument xDoc = XDocument.Load(@"Resources/BPRs.xml");
+                //создаём таблицу
+                dt = CreatePriceTable();
+                DataRow newRow = null;
+                //получаем все узлы в xml файле
+                foreach (XElement elm in xDoc.Descendants("BPRs"))
+                {
+                    //создаём новую запись
+                    newRow = dt.NewRow();
+                    //проверяем наличие атрибутов (если требуется)
+                    if (elm.HasAttributes)
+                    {
+                        //проверяем наличие атрибута id
+                        if (elm.Attribute("id") != null)
+                        {
+                            //получаем значение атрибута
+                            newRow["ID"] = int.Parse(elm.Attribute("id").Value);
+                        }
+                    }
+                    #region проверяем наличие xml элементов
+                    if (elm.Element("name") != null)
+                    {
+                        newRow["Name"] = elm.Element("name").Value;
+                    }
+
+                    if (elm.Element("BuyMin") != null)
+                    {
+                        newRow["Buy(min)"] = elm.Element("BuyMin").Value;
+                    }
+                    if (elm.Element("BuyMed") != null)
+                    {
+                        newRow["Buy(median)"] = elm.Element("BuyMed").Value;
+                    }
+                    if (elm.Element("BuyAvg") != null)
+                    {
+                        newRow["Buy(avg)"] = elm.Element("BuyAvg").Value;
+                    }
+                    if (elm.Element("BuyMax") != null)
+                    {
+                        newRow["Buy(max)"] = elm.Element("BuyMax").Value;
+                    }
+                    if (elm.Element("BuySelf") != null)
+                    {
+                        newRow["Buy(self)"] = elm.Element("BuySelf").Value;
+                    }
+
+                    if (elm.Element("SellMin") != null)
+                    {
+                        newRow["Sell(min)"] = elm.Element("SellMin").Value;
+                    }
+                    if (elm.Element("SellMed") != null)
+                    {
+                        newRow["Sell(median)"] = elm.Element("SellMed").Value;
+                    }
+                    if (elm.Element("SellAvg") != null)
+                    {
+                        newRow["Sell(avg)"] = elm.Element("SellAvg").Value;
+                    }
+                    if (elm.Element("SellMax") != null)
+                    {
+                        newRow["Sell(max)"] = elm.Element("SellMax").Value;
+                    }
+                    if (elm.Element("SellSelf") != null)
+                    {
+                        newRow["Sell(self)"] = elm.Element("SellSelf").Value;
+                    }
+                    #endregion
+
+                    //добавляем новую запись в таблицу
+                    dt.Rows.Add(newRow);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return dt;
+        }
+
+        private void treeViewFormManuf_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            //Find Node By Name
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(@"Resources/BPRs.xml");
+            string Name = "/BPRs/B" + GetAllParent(e.Node);
+            //Name +=  e.Node.Name;            
+            XmlNode node = xmlDoc.DocumentElement.SelectNodes(Name)[e.Node.Index];
+            textBoxFormManufInputName.Text = "";
+            textBoxFormManufInputCount.Text = "";
+            if (node != null)
+            {
+                XmlAttributeCollection atrCol;
+                atrCol = node.Attributes;
+                if (node.Name == "B")
+                {
+                    textBoxFormManufBPName.Text = "";
+                    textBoxFormManufOutName.Text = "";
+                    textBoxFormManufOutID.Text = "";
+                    textBoxFormManufOutCount.Text = "";
+                    textBoxFormManufInputName.Text = "";
+                    textBoxFormManufInputID.Text = "";
+                    textBoxFormManufInputCount.Text = "";
+                }
+                if (node.Name == "BPR")
+                {
+                    textBoxFormManufBPName.Text = node.Attributes["Name"].Value.ToString();
+                    textBoxFormManufOutName.Text = "";
+                    textBoxFormManufOutID.Text = "";
+                    textBoxFormManufOutCount.Text = "";
+                    textBoxFormManufInputName.Text = "";
+                    textBoxFormManufInputID.Text = "";
+                    textBoxFormManufInputCount.Text = "";
+                }
+                if (node.Name == "Out")
+                {
+                    textBoxFormManufOutName.Text = node.Attributes["Name"].Value.ToString();
+                    textBoxFormManufOutID.Text = node.Attributes["id"].Value.ToString();
+                    textBoxFormManufOutCount.Text = node.Attributes["count"].Value.ToString();
+                    textBoxFormManufInputName.Text = "";
+                    textBoxFormManufInputID.Text = "";
+                    textBoxFormManufInputCount.Text = "";
+                }
+                if (node.Name == "In")
+                {
+                    textBoxFormManufInputName.Text = node.Attributes["Name"].Value.ToString();
+                    textBoxFormManufInputID.Text = node.Attributes["id"].Value.ToString();
+                    textBoxFormManufInputCount.Text = node.Attributes["count"].Value.ToString();
+                }
+            }
+        }
+
+        private string GetAllParent(TreeNode node)
+        {
+            string result = "";
+            if (node.Parent != null)
+            {
+                result += GetAllParent(node.Parent);
+            }
+            if (node.Name != "") result += ("/" + node.Name);
+            return result;
         }
     }
 }
