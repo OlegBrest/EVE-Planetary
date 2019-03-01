@@ -1,44 +1,8 @@
 <BPRs>
-	<B>
-		<BPR Name = "Some BPO">
-			<Out id = "12" count = "3" Name = "Some Good">
-				<In id = "654" count = "3643" Name = "Some Input11">3643</In>
-				<In id = "45" count = "43" Name = "Some Input21">3643</In>
-				<In id = "654" count = "3643" Name = "Some Input11">3643</In>
-				<In id = "45" count = "43" Name = "Some Input21">753</In>
-				<In id = "73" count = "753" Name = "Some Input31">753</In>
-			</Out>
-		</BPR>
-	</B>
-	<P>
-		<BPR Name = "Some BPO">
-			<Out id = "12" count = "3" Name = "Some Good">
-				<In id = "654" count = "3643" Name = "Some Input11">3643</In>
-				<In id = "45" count = "43" Name = "Some Input21">3643</In>
-				<In id = "654" count = "3643" Name = "Some Input11">3643</In>
-				<In id = "45" count = "43" Name = "Some Input21">753</In>
-				<In id = "73" count = "753" Name = "Some Input31">753</In>
-			</Out>
-		</BPR>
-		<BPR id = "12" Name = "Some BPO 3">
-			<Out id = "12" count = "3" Name = "Some Good 5">
-				<In id = "654" count = "3643" Name = "Some Input11">Some Input11</In>
-				<In id = "45" count = "43" Name = "Some Input21">Some Input11</In>
-				<In id = "73" count = "753" Name = " Some Input31">Some Input11</In>
-				<In id = "654" count = "3643" Name = "Some Input11">3643</In>
-				<In id = "45" count = "43" Name = "Some Input21">43</In>
-			</Out>
-		</BPR>
-	</P>
-	<R>
-		<BPR Name = "Some BPO">
-			<Out id = "12" count = "3" Name = "Some Good">
-				<In id = "654" count = "3643" Name = "Some Input11">3643</In>
-				<In id = "45" count = "43" Name = "Some Input21">3643</In>
-				<In id = "654" count = "3643" Name = "Some Input11">3643</In>
-				<In id = "45" count = "43" Name = "Some Input21">753</In>
-				<In id = "73" count = "753" Name = "Some Input31">753</In>
-			</Out>
-		</BPR>
-	</R>
+  <B>
+  </B>
+  <P>
+  </P>
+  <R>
+  </R>
 </BPRs>

@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TabControlMain = new System.Windows.Forms.TabControl();
             this.tabPrice = new System.Windows.Forms.TabPage();
             this.splitPrices = new System.Windows.Forms.SplitContainer();
@@ -39,10 +39,14 @@
             this.UpdatePrices = new System.Windows.Forms.Button();
             this.tabWorks = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.TabControlFormulas = new System.Windows.Forms.TabControl();
             this.tabPageManuf = new System.Windows.Forms.TabPage();
-            this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.treeViewFormManuf = new System.Windows.Forms.TreeView();
+            this.tabPagePlanet = new System.Windows.Forms.TabPage();
+            this.treeViewFormPlanet = new System.Windows.Forms.TreeView();
+            this.tabPageReact = new System.Windows.Forms.TabPage();
+            this.treeViewFormReact = new System.Windows.Forms.TreeView();
             this.panelFormulas = new System.Windows.Forms.Panel();
             this.ButtonRemoveManuf = new System.Windows.Forms.Button();
             this.ButtonAddEditManuf = new System.Windows.Forms.Button();
@@ -60,12 +64,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.tabPagePlanet = new System.Windows.Forms.TabPage();
-            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.treeViewFormPlanet = new System.Windows.Forms.TreeView();
-            this.tabPageReact = new System.Windows.Forms.TabPage();
-            this.splitContainer4 = new System.Windows.Forms.SplitContainer();
-            this.treeViewFormReact = new System.Windows.Forms.TreeView();
             this.button2 = new System.Windows.Forms.Button();
             this.tabCalc = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
@@ -81,6 +79,7 @@
             this.TabCalcPlanet = new System.Windows.Forms.TabPage();
             this.TabCalcReact = new System.Windows.Forms.TabPage();
             this.ProgressBarPrice = new System.Windows.Forms.ProgressBar();
+            this.button1 = new System.Windows.Forms.Button();
             this.TabControlMain.SuspendLayout();
             this.tabPrice.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitPrices)).BeginInit();
@@ -93,21 +92,15 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.TabControlFormulas.SuspendLayout();
-            this.tabPageManuf.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
             this.splitContainer5.Panel1.SuspendLayout();
             this.splitContainer5.Panel2.SuspendLayout();
             this.splitContainer5.SuspendLayout();
-            this.panelFormulas.SuspendLayout();
+            this.TabControlFormulas.SuspendLayout();
+            this.tabPageManuf.SuspendLayout();
             this.tabPagePlanet.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
-            this.splitContainer3.Panel1.SuspendLayout();
-            this.splitContainer3.SuspendLayout();
             this.tabPageReact.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
-            this.splitContainer4.Panel1.SuspendLayout();
-            this.splitContainer4.SuspendLayout();
+            this.panelFormulas.SuspendLayout();
             this.tabCalc.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.TabCalcBuySell.SuspendLayout();
@@ -157,6 +150,7 @@
             // 
             this.splitPrices.Panel2.Controls.Add(this.SaveBttn);
             this.splitPrices.Panel2.Controls.Add(this.ClearEmpty);
+            this.splitPrices.Panel2.Controls.Add(this.button1);
             this.splitPrices.Panel2.Controls.Add(this.UpdatePrices);
             this.splitPrices.Size = new System.Drawing.Size(786, 418);
             this.splitPrices.SplitterDistance = 360;
@@ -166,16 +160,16 @@
             // 
             this.DGVPrices.AllowUserToAddRows = false;
             this.DGVPrices.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = null;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DGVPrices.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.Format = "N2";
+            dataGridViewCellStyle5.NullValue = null;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DGVPrices.DefaultCellStyle = dataGridViewCellStyle5;
             this.DGVPrices.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DGVPrices.Location = new System.Drawing.Point(0, 0);
             this.DGVPrices.Name = "DGVPrices";
@@ -239,7 +233,7 @@
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.TabControlFormulas);
+            this.splitContainer2.Panel1.Controls.Add(this.splitContainer5);
             // 
             // splitContainer2.Panel2
             // 
@@ -247,28 +241,6 @@
             this.splitContainer2.Size = new System.Drawing.Size(786, 418);
             this.splitContainer2.SplitterDistance = 360;
             this.splitContainer2.TabIndex = 2;
-            // 
-            // TabControlFormulas
-            // 
-            this.TabControlFormulas.Controls.Add(this.tabPageManuf);
-            this.TabControlFormulas.Controls.Add(this.tabPagePlanet);
-            this.TabControlFormulas.Controls.Add(this.tabPageReact);
-            this.TabControlFormulas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TabControlFormulas.Location = new System.Drawing.Point(0, 0);
-            this.TabControlFormulas.Name = "TabControlFormulas";
-            this.TabControlFormulas.SelectedIndex = 0;
-            this.TabControlFormulas.Size = new System.Drawing.Size(786, 360);
-            this.TabControlFormulas.TabIndex = 0;
-            // 
-            // tabPageManuf
-            // 
-            this.tabPageManuf.Controls.Add(this.splitContainer5);
-            this.tabPageManuf.Location = new System.Drawing.Point(4, 22);
-            this.tabPageManuf.Name = "tabPageManuf";
-            this.tabPageManuf.Size = new System.Drawing.Size(778, 334);
-            this.tabPageManuf.TabIndex = 0;
-            this.tabPageManuf.Text = "Manufacturing";
-            this.tabPageManuf.UseVisualStyleBackColor = true;
             // 
             // splitContainer5
             // 
@@ -279,14 +251,36 @@
             // 
             // splitContainer5.Panel1
             // 
-            this.splitContainer5.Panel1.Controls.Add(this.treeViewFormManuf);
+            this.splitContainer5.Panel1.Controls.Add(this.TabControlFormulas);
             // 
             // splitContainer5.Panel2
             // 
             this.splitContainer5.Panel2.Controls.Add(this.panelFormulas);
-            this.splitContainer5.Size = new System.Drawing.Size(778, 334);
-            this.splitContainer5.SplitterDistance = 524;
+            this.splitContainer5.Size = new System.Drawing.Size(786, 360);
+            this.splitContainer5.SplitterDistance = 532;
             this.splitContainer5.TabIndex = 3;
+            // 
+            // TabControlFormulas
+            // 
+            this.TabControlFormulas.Controls.Add(this.tabPageManuf);
+            this.TabControlFormulas.Controls.Add(this.tabPagePlanet);
+            this.TabControlFormulas.Controls.Add(this.tabPageReact);
+            this.TabControlFormulas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TabControlFormulas.Location = new System.Drawing.Point(0, 0);
+            this.TabControlFormulas.Name = "TabControlFormulas";
+            this.TabControlFormulas.SelectedIndex = 0;
+            this.TabControlFormulas.Size = new System.Drawing.Size(532, 360);
+            this.TabControlFormulas.TabIndex = 0;
+            // 
+            // tabPageManuf
+            // 
+            this.tabPageManuf.Controls.Add(this.treeViewFormManuf);
+            this.tabPageManuf.Location = new System.Drawing.Point(4, 22);
+            this.tabPageManuf.Name = "tabPageManuf";
+            this.tabPageManuf.Size = new System.Drawing.Size(524, 334);
+            this.tabPageManuf.TabIndex = 0;
+            this.tabPageManuf.Text = "Manufacturing";
+            this.tabPageManuf.UseVisualStyleBackColor = true;
             // 
             // treeViewFormManuf
             // 
@@ -297,7 +291,52 @@
             this.treeViewFormManuf.Name = "treeViewFormManuf";
             this.treeViewFormManuf.Size = new System.Drawing.Size(524, 334);
             this.treeViewFormManuf.TabIndex = 0;
-            this.treeViewFormManuf.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewFormManuf_NodeMouseClick);
+            this.treeViewFormManuf.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView_NodeMouseClick);
+            this.treeViewFormManuf.MouseClick += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseClick);
+            // 
+            // tabPagePlanet
+            // 
+            this.tabPagePlanet.Controls.Add(this.treeViewFormPlanet);
+            this.tabPagePlanet.Location = new System.Drawing.Point(4, 22);
+            this.tabPagePlanet.Name = "tabPagePlanet";
+            this.tabPagePlanet.Size = new System.Drawing.Size(524, 334);
+            this.tabPagePlanet.TabIndex = 1;
+            this.tabPagePlanet.Text = "Planetology";
+            this.tabPagePlanet.UseVisualStyleBackColor = true;
+            // 
+            // treeViewFormPlanet
+            // 
+            this.treeViewFormPlanet.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewFormPlanet.HotTracking = true;
+            this.treeViewFormPlanet.LabelEdit = true;
+            this.treeViewFormPlanet.Location = new System.Drawing.Point(0, 0);
+            this.treeViewFormPlanet.Name = "treeViewFormPlanet";
+            this.treeViewFormPlanet.Size = new System.Drawing.Size(524, 334);
+            this.treeViewFormPlanet.TabIndex = 0;
+            this.treeViewFormPlanet.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView_NodeMouseClick);
+            this.treeViewFormPlanet.MouseClick += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseClick);
+            // 
+            // tabPageReact
+            // 
+            this.tabPageReact.Controls.Add(this.treeViewFormReact);
+            this.tabPageReact.Location = new System.Drawing.Point(4, 22);
+            this.tabPageReact.Name = "tabPageReact";
+            this.tabPageReact.Size = new System.Drawing.Size(524, 334);
+            this.tabPageReact.TabIndex = 2;
+            this.tabPageReact.Text = "Reaction";
+            this.tabPageReact.UseVisualStyleBackColor = true;
+            // 
+            // treeViewFormReact
+            // 
+            this.treeViewFormReact.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewFormReact.HotTracking = true;
+            this.treeViewFormReact.LabelEdit = true;
+            this.treeViewFormReact.Location = new System.Drawing.Point(0, 0);
+            this.treeViewFormReact.Name = "treeViewFormReact";
+            this.treeViewFormReact.Size = new System.Drawing.Size(524, 334);
+            this.treeViewFormReact.TabIndex = 0;
+            this.treeViewFormReact.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView_NodeMouseClick);
+            this.treeViewFormReact.MouseClick += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseClick);
             // 
             // panelFormulas
             // 
@@ -320,7 +359,7 @@
             this.panelFormulas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelFormulas.Location = new System.Drawing.Point(0, 0);
             this.panelFormulas.Name = "panelFormulas";
-            this.panelFormulas.Size = new System.Drawing.Size(250, 334);
+            this.panelFormulas.Size = new System.Drawing.Size(250, 360);
             this.panelFormulas.TabIndex = 0;
             // 
             // ButtonRemoveManuf
@@ -367,6 +406,8 @@
             this.textBoxFormManufInputID.Name = "textBoxFormManufInputID";
             this.textBoxFormManufInputID.Size = new System.Drawing.Size(187, 20);
             this.textBoxFormManufInputID.TabIndex = 1;
+            this.textBoxFormManufInputID.Tag = "textBoxFormManufInputName";
+            this.textBoxFormManufInputID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxID_KeyDown);
             // 
             // textBoxFormManufOutID
             // 
@@ -374,6 +415,8 @@
             this.textBoxFormManufOutID.Name = "textBoxFormManufOutID";
             this.textBoxFormManufOutID.Size = new System.Drawing.Size(187, 20);
             this.textBoxFormManufOutID.TabIndex = 1;
+            this.textBoxFormManufOutID.Tag = "textBoxFormManufOutName";
+            this.textBoxFormManufOutID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxID_KeyDown);
             // 
             // textBoxFormManufOutName
             // 
@@ -385,7 +428,7 @@
             this.textBoxFormManufOutName.TabIndex = 1;
             this.textBoxFormManufOutName.Tag = "textBoxFormManufOutID";
             this.textBoxFormManufOutName.MouseClick += new System.Windows.Forms.MouseEventHandler(this.textBox_MouseClick);
-            this.textBoxFormManufOutName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_KeyDown);
+            this.textBoxFormManufOutName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxName_KeyDown);
             // 
             // textBoxFormManufInputName
             // 
@@ -397,7 +440,7 @@
             this.textBoxFormManufInputName.TabIndex = 1;
             this.textBoxFormManufInputName.Tag = "textBoxFormManufInputID";
             this.textBoxFormManufInputName.MouseClick += new System.Windows.Forms.MouseEventHandler(this.textBox_MouseClick);
-            this.textBoxFormManufInputName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_KeyDown);
+            this.textBoxFormManufInputName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxName_KeyDown);
             // 
             // label7
             // 
@@ -471,74 +514,6 @@
             this.label1.Size = new System.Drawing.Size(52, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "BP Name";
-            // 
-            // tabPagePlanet
-            // 
-            this.tabPagePlanet.Controls.Add(this.splitContainer3);
-            this.tabPagePlanet.Location = new System.Drawing.Point(4, 22);
-            this.tabPagePlanet.Name = "tabPagePlanet";
-            this.tabPagePlanet.Size = new System.Drawing.Size(778, 334);
-            this.tabPagePlanet.TabIndex = 1;
-            this.tabPagePlanet.Text = "Planetology";
-            this.tabPagePlanet.UseVisualStyleBackColor = true;
-            // 
-            // splitContainer3
-            // 
-            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer3.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.splitContainer3.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer3.Name = "splitContainer3";
-            // 
-            // splitContainer3.Panel1
-            // 
-            this.splitContainer3.Panel1.Controls.Add(this.treeViewFormPlanet);
-            this.splitContainer3.Size = new System.Drawing.Size(778, 334);
-            this.splitContainer3.SplitterDistance = 500;
-            this.splitContainer3.TabIndex = 2;
-            // 
-            // treeViewFormPlanet
-            // 
-            this.treeViewFormPlanet.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeViewFormPlanet.HotTracking = true;
-            this.treeViewFormPlanet.LabelEdit = true;
-            this.treeViewFormPlanet.Location = new System.Drawing.Point(0, 0);
-            this.treeViewFormPlanet.Name = "treeViewFormPlanet";
-            this.treeViewFormPlanet.Size = new System.Drawing.Size(500, 334);
-            this.treeViewFormPlanet.TabIndex = 0;
-            // 
-            // tabPageReact
-            // 
-            this.tabPageReact.Controls.Add(this.splitContainer4);
-            this.tabPageReact.Location = new System.Drawing.Point(4, 22);
-            this.tabPageReact.Name = "tabPageReact";
-            this.tabPageReact.Size = new System.Drawing.Size(778, 334);
-            this.tabPageReact.TabIndex = 2;
-            this.tabPageReact.Text = "Reaction";
-            this.tabPageReact.UseVisualStyleBackColor = true;
-            // 
-            // splitContainer4
-            // 
-            this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer4.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.splitContainer4.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer4.Name = "splitContainer4";
-            // 
-            // splitContainer4.Panel1
-            // 
-            this.splitContainer4.Panel1.Controls.Add(this.treeViewFormReact);
-            this.splitContainer4.Size = new System.Drawing.Size(778, 334);
-            this.splitContainer4.SplitterDistance = 441;
-            this.splitContainer4.TabIndex = 3;
-            // 
-            // treeViewFormReact
-            // 
-            this.treeViewFormReact.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeViewFormReact.HotTracking = true;
-            this.treeViewFormReact.LabelEdit = true;
-            this.treeViewFormReact.Location = new System.Drawing.Point(0, 0);
-            this.treeViewFormReact.Name = "treeViewFormReact";
-            this.treeViewFormReact.Size = new System.Drawing.Size(441, 334);
-            this.treeViewFormReact.TabIndex = 0;
             // 
             // button2
             // 
@@ -614,16 +589,16 @@
             // 
             this.DGVCalcBuySell.AllowUserToAddRows = false;
             this.DGVCalcBuySell.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = null;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DGVCalcBuySell.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.Format = "N2";
+            dataGridViewCellStyle6.NullValue = null;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DGVCalcBuySell.DefaultCellStyle = dataGridViewCellStyle6;
             this.DGVCalcBuySell.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DGVCalcBuySell.Location = new System.Drawing.Point(0, 0);
             this.DGVCalcBuySell.Name = "DGVCalcBuySell";
@@ -726,6 +701,18 @@
             this.ProgressBarPrice.Size = new System.Drawing.Size(800, 10);
             this.ProgressBarPrice.TabIndex = 1;
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.Transparent;
+            this.button1.ForeColor = System.Drawing.Color.Black;
+            this.button1.Location = new System.Drawing.Point(285, 7);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(88, 31);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Load YAML";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -748,22 +735,16 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            this.TabControlFormulas.ResumeLayout(false);
-            this.tabPageManuf.ResumeLayout(false);
             this.splitContainer5.Panel1.ResumeLayout(false);
             this.splitContainer5.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
             this.splitContainer5.ResumeLayout(false);
+            this.TabControlFormulas.ResumeLayout(false);
+            this.tabPageManuf.ResumeLayout(false);
+            this.tabPagePlanet.ResumeLayout(false);
+            this.tabPageReact.ResumeLayout(false);
             this.panelFormulas.ResumeLayout(false);
             this.panelFormulas.PerformLayout();
-            this.tabPagePlanet.ResumeLayout(false);
-            this.splitContainer3.Panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
-            this.splitContainer3.ResumeLayout(false);
-            this.tabPageReact.ResumeLayout(false);
-            this.splitContainer4.Panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
-            this.splitContainer4.ResumeLayout(false);
             this.tabCalc.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
             this.TabCalcBuySell.ResumeLayout(false);
@@ -805,13 +786,11 @@
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.Button ButtonAddEditManuf;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.TabPage TabCalcPlanet;
         private System.Windows.Forms.TabPage TabCalcReact;
         private System.Windows.Forms.TreeView treeViewFormPlanet;
         private System.Windows.Forms.SplitContainer splitContainer5;
         private System.Windows.Forms.TreeView treeViewFormManuf;
-        private System.Windows.Forms.SplitContainer splitContainer4;
         private System.Windows.Forms.TreeView treeViewFormReact;
         private System.Windows.Forms.Panel panelFormulas;
         private System.Windows.Forms.TextBox textBoxFormManufInputCount;
@@ -829,6 +808,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button ButtonRemoveManuf;
+        private System.Windows.Forms.Button button1;
     }
 }
 
