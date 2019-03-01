@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TabControlMain = new System.Windows.Forms.TabControl();
             this.tabPrice = new System.Windows.Forms.TabPage();
             this.splitPrices = new System.Windows.Forms.SplitContainer();
@@ -44,7 +44,8 @@
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.treeViewFormManuf = new System.Windows.Forms.TreeView();
             this.panelFormulas = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.ButtonRemoveManuf = new System.Windows.Forms.Button();
+            this.ButtonAddEditManuf = new System.Windows.Forms.Button();
             this.textBoxFormManufInputCount = new System.Windows.Forms.TextBox();
             this.textBoxFormManufOutCount = new System.Windows.Forms.TextBox();
             this.textBoxFormManufInputID = new System.Windows.Forms.TextBox();
@@ -165,16 +166,16 @@
             // 
             this.DGVPrices.AllowUserToAddRows = false;
             this.DGVPrices.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.Format = "N2";
-            dataGridViewCellStyle5.NullValue = null;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DGVPrices.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.NullValue = null;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DGVPrices.DefaultCellStyle = dataGridViewCellStyle1;
             this.DGVPrices.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DGVPrices.Location = new System.Drawing.Point(0, 0);
             this.DGVPrices.Name = "DGVPrices";
@@ -300,7 +301,8 @@
             // 
             // panelFormulas
             // 
-            this.panelFormulas.Controls.Add(this.button1);
+            this.panelFormulas.Controls.Add(this.ButtonRemoveManuf);
+            this.panelFormulas.Controls.Add(this.ButtonAddEditManuf);
             this.panelFormulas.Controls.Add(this.textBoxFormManufInputCount);
             this.panelFormulas.Controls.Add(this.textBoxFormManufOutCount);
             this.panelFormulas.Controls.Add(this.textBoxFormManufInputID);
@@ -321,17 +323,29 @@
             this.panelFormulas.Size = new System.Drawing.Size(250, 334);
             this.panelFormulas.TabIndex = 0;
             // 
-            // button1
+            // ButtonRemoveManuf
             // 
-            this.button1.BackColor = System.Drawing.Color.Transparent;
-            this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(3, 242);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(88, 31);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Add/Edit";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.ButtonRemoveManuf.BackColor = System.Drawing.Color.Transparent;
+            this.ButtonRemoveManuf.ForeColor = System.Drawing.Color.Black;
+            this.ButtonRemoveManuf.Location = new System.Drawing.Point(97, 242);
+            this.ButtonRemoveManuf.Name = "ButtonRemoveManuf";
+            this.ButtonRemoveManuf.Size = new System.Drawing.Size(88, 31);
+            this.ButtonRemoveManuf.TabIndex = 0;
+            this.ButtonRemoveManuf.Text = "Remove";
+            this.ButtonRemoveManuf.UseVisualStyleBackColor = false;
+            this.ButtonRemoveManuf.Click += new System.EventHandler(this.ButtonRemoveManuf_Click);
+            // 
+            // ButtonAddEditManuf
+            // 
+            this.ButtonAddEditManuf.BackColor = System.Drawing.Color.Transparent;
+            this.ButtonAddEditManuf.ForeColor = System.Drawing.Color.Black;
+            this.ButtonAddEditManuf.Location = new System.Drawing.Point(3, 242);
+            this.ButtonAddEditManuf.Name = "ButtonAddEditManuf";
+            this.ButtonAddEditManuf.Size = new System.Drawing.Size(88, 31);
+            this.ButtonAddEditManuf.TabIndex = 0;
+            this.ButtonAddEditManuf.Text = "Add/Edit";
+            this.ButtonAddEditManuf.UseVisualStyleBackColor = false;
+            this.ButtonAddEditManuf.Click += new System.EventHandler(this.ButtonAddEditManuf_Click);
             // 
             // textBoxFormManufInputCount
             // 
@@ -600,16 +614,16 @@
             // 
             this.DGVCalcBuySell.AllowUserToAddRows = false;
             this.DGVCalcBuySell.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.Format = "N2";
-            dataGridViewCellStyle6.NullValue = null;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DGVCalcBuySell.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = null;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DGVCalcBuySell.DefaultCellStyle = dataGridViewCellStyle2;
             this.DGVCalcBuySell.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DGVCalcBuySell.Location = new System.Drawing.Point(0, 0);
             this.DGVCalcBuySell.Name = "DGVCalcBuySell";
@@ -789,7 +803,7 @@
         private System.Windows.Forms.TabPage tabPagePlanet;
         private System.Windows.Forms.TabPage tabPageReact;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button ButtonAddEditManuf;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.TabPage TabCalcPlanet;
@@ -814,6 +828,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button ButtonRemoveManuf;
     }
 }
 

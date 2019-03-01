@@ -432,20 +432,19 @@ namespace EVE_Planetary
             //DGVFormManuf.DataSource = BPRTable;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void ButtonAddEditManuf_Click(object sender, EventArgs e)
         {
             if (textBoxFormManufInputName.Text != "")
             {
                 CurrentNode.Attributes["Name"].Value = textBoxFormManufInputName.Text;
                 CurrentNode.Attributes["id"].Value = textBoxFormManufInputID.Text;
                 CurrentNode.Attributes["count"].Value = textBoxFormManufInputCount.Text;
+                CurrentNode.InnerText = textBoxFormManufInputCount.Text;
             }
 
             if (File.Exists(@"Resources/BPRs.xml")) File.Delete(@"Resources/BPRs.xml");
             CurrentNode.OwnerDocument.Save(@"Resources/BPRs.xml");
             LoadBPRXML();
-            /*if (File.Exists(@"Resources/BPRs.xml")) File.Delete(@"Resources/BPRs.xml");
-            BPRTable.WriteXml(@"Resources/BPRs.xml", XmlWriteMode.WriteSchema);*/
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -696,11 +695,19 @@ namespace EVE_Planetary
         {
             TextBox textBox = sender as TextBox;
             //textBox.AutoCompleteCustomSource.Clear();
-            DataRow[] dataRows = MainPricesDT.Select("Name = '" + textBox.Text + "'", "Name");
+            DataRow[] dataRows = MainPricesDT.Select("Name = '" + textBox.Text.Replace("'","''") + "'", "Name");
             if (dataRows.Count() > 0)
                 (this.Controls.Find(textBox.Tag.ToString(), true)[0] as TextBox).Text = dataRows[0]["Id"].ToString();
             else
                 (this.Controls.Find(textBox.Tag.ToString(), true)[0] as TextBox).Text = "";
+        }
+
+        private void ButtonRemoveManuf_Click(object sender, EventArgs e)
+        {
+            CurrentNode.ParentNode.RemoveChild(CurrentNode);
+            if (File.Exists(@"Resources/BPRs.xml")) File.Delete(@"Resources/BPRs.xml");
+            CurrentNode.OwnerDocument.Save(@"Resources/BPRs.xml");
+            LoadBPRXML();
         }
     }
 }
