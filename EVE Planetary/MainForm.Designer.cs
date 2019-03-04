@@ -28,14 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TabControlMain = new System.Windows.Forms.TabControl();
             this.tabPrice = new System.Windows.Forms.TabPage();
             this.splitPrices = new System.Windows.Forms.SplitContainer();
             this.DGVPrices = new System.Windows.Forms.DataGridView();
             this.SaveBttn = new System.Windows.Forms.Button();
             this.ClearEmpty = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.UpdatePrices = new System.Windows.Forms.Button();
             this.tabWorks = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -79,7 +80,7 @@
             this.TabCalcPlanet = new System.Windows.Forms.TabPage();
             this.TabCalcReact = new System.Windows.Forms.TabPage();
             this.ProgressBarPrice = new System.Windows.Forms.ProgressBar();
-            this.button1 = new System.Windows.Forms.Button();
+            this.BPYAMLReadBTTN = new System.Windows.Forms.Button();
             this.TabControlMain.SuspendLayout();
             this.tabPrice.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitPrices)).BeginInit();
@@ -160,16 +161,16 @@
             // 
             this.DGVPrices.AllowUserToAddRows = false;
             this.DGVPrices.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.Format = "N2";
-            dataGridViewCellStyle5.NullValue = null;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DGVPrices.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.NullValue = null;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DGVPrices.DefaultCellStyle = dataGridViewCellStyle1;
             this.DGVPrices.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DGVPrices.Location = new System.Drawing.Point(0, 0);
             this.DGVPrices.Name = "DGVPrices";
@@ -199,6 +200,18 @@
             this.ClearEmpty.Text = "Clear Empty";
             this.ClearEmpty.UseVisualStyleBackColor = false;
             this.ClearEmpty.Click += new System.EventHandler(this.ClearEmpty_Click);
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.Transparent;
+            this.button1.ForeColor = System.Drawing.Color.Black;
+            this.button1.Location = new System.Drawing.Point(285, 7);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(88, 31);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Load YAML";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // UpdatePrices
             // 
@@ -237,6 +250,7 @@
             // 
             // splitContainer2.Panel2
             // 
+            this.splitContainer2.Panel2.Controls.Add(this.BPYAMLReadBTTN);
             this.splitContainer2.Panel2.Controls.Add(this.button2);
             this.splitContainer2.Size = new System.Drawing.Size(786, 418);
             this.splitContainer2.SplitterDistance = 360;
@@ -589,16 +603,16 @@
             // 
             this.DGVCalcBuySell.AllowUserToAddRows = false;
             this.DGVCalcBuySell.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.Format = "N2";
-            dataGridViewCellStyle6.NullValue = null;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DGVCalcBuySell.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = null;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DGVCalcBuySell.DefaultCellStyle = dataGridViewCellStyle2;
             this.DGVCalcBuySell.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DGVCalcBuySell.Location = new System.Drawing.Point(0, 0);
             this.DGVCalcBuySell.Name = "DGVCalcBuySell";
@@ -701,17 +715,17 @@
             this.ProgressBarPrice.Size = new System.Drawing.Size(800, 10);
             this.ProgressBarPrice.TabIndex = 1;
             // 
-            // button1
+            // BPYAMLReadBTTN
             // 
-            this.button1.BackColor = System.Drawing.Color.Transparent;
-            this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(285, 7);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(88, 31);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Load YAML";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.BPYAMLReadBTTN.BackColor = System.Drawing.Color.Transparent;
+            this.BPYAMLReadBTTN.ForeColor = System.Drawing.Color.Black;
+            this.BPYAMLReadBTTN.Location = new System.Drawing.Point(99, 7);
+            this.BPYAMLReadBTTN.Name = "BPYAMLReadBTTN";
+            this.BPYAMLReadBTTN.Size = new System.Drawing.Size(88, 31);
+            this.BPYAMLReadBTTN.TabIndex = 0;
+            this.BPYAMLReadBTTN.Text = "Load YAML";
+            this.BPYAMLReadBTTN.UseVisualStyleBackColor = false;
+            this.BPYAMLReadBTTN.Click += new System.EventHandler(this.BPYAMLReadBTTN_Click);
             // 
             // MainForm
             // 
@@ -809,6 +823,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button ButtonRemoveManuf;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button BPYAMLReadBTTN;
     }
 }
 

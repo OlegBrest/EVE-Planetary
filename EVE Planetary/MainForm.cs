@@ -798,10 +798,9 @@ namespace EVE_Planetary
             CurrenttreeView = (sender as TreeView);
         }
 
-        private void yamlReader()
+        //yaml parser for items ID
+        private void yamlPriceReader()
         {
-
-
             YamlStream stream = new YamlStream();
             using (var reader = new StreamReader(@"Resources/typeIDs.yaml"))
             {
@@ -809,17 +808,75 @@ namespace EVE_Planetary
             }
             YamlDocument yaDoc = stream.Documents[0];
             YamlMappingNode yamm = (YamlMappingNode)(yaDoc.RootNode);
+            DGVPrices.DataSource = null;
+            MainPricesDT.Clear();
+            MainPricesDT = CreatePriceTable();
             foreach (KeyValuePair<YamlNode, YamlNode> KVP in yamm.Children)
             {
                 int id = Convert.ToInt32(((YamlScalarNode)KVP.Key).Value);
-                string name = ((YamlScalarNode)((YamlMappingNode)((YamlMappingNode)KVP.Value).Children["name"]).Children["ru"]).Value;
-                MessageBox.Show(name);
+                string name = "";
+                try
+                {
+                    name = ((YamlScalarNode)((YamlMappingNode)((YamlMappingNode)KVP.Value).Children["name"]).Children["ru"]).Value;
+                }
+                catch (Exception ex)
+                {
+                    name = id.ToString();
+                    // MessageBox.Show(id.ToString(), ex.Message);
+                }
+                //MessageBox.Show(name);
+                DataRow ndr = MainPricesDT.NewRow();
+                ndr["id"] = id;
+                ndr["Name"] = name;
+                MainPricesDT.Rows.Add(ndr);
             }
+            ShowPriceDGV();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            yamlReader();
+            yamlPriceReader();
+        }
+
+
+        //yaml parser for BPs
+        private void yamlBlueprintsReader()
+        {
+            YamlStream stream = new YamlStream();
+            using (var reader = new StreamReader(@"Resources/typeIDs.yaml"))
+            {
+                stream.Load(reader);
+            }
+            YamlDocument yaDoc = stream.Documents[0];
+            YamlMappingNode yamm = (YamlMappingNode)(yaDoc.RootNode);
+            DGVPrices.DataSource = null;
+            MainPricesDT.Clear();
+            MainPricesDT = CreatePriceTable();
+            foreach (KeyValuePair<YamlNode, YamlNode> KVP in yamm.Children)
+            {
+                int id = Convert.ToInt32(((YamlScalarNode)KVP.Key).Value);
+                string name = "";
+                try
+                {
+                    name = ((YamlScalarNode)((YamlMappingNode)((YamlMappingNode)KVP.Value).Children["name"]).Children["ru"]).Value;
+                }
+                catch (Exception ex)
+                {
+                    name = id.ToString();
+                    // MessageBox.Show(id.ToString(), ex.Message);
+                }
+                //MessageBox.Show(name);
+                DataRow ndr = MainPricesDT.NewRow();
+                ndr["id"] = id;
+                ndr["Name"] = name;
+                MainPricesDT.Rows.Add(ndr);
+            }
+            ShowPriceDGV();
+        }
+
+        private void BPYAMLReadBTTN_Click(object sender, EventArgs e)
+        {
+            yamlBlueprintsReader();
         }
     }
 }
