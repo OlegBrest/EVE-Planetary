@@ -40,6 +40,7 @@ namespace EVE_Planetary
             InitializeComponent();
             comboCalcSell.SelectedIndex = 0;
             comboCalcBuy.SelectedIndex = 1;
+            langselector.SelectedIndex = 0;
         }
 
         private DataTable CreatePriceTable()
@@ -690,8 +691,6 @@ namespace EVE_Planetary
         private void treeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             //Find Node By Name
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(@"Resources/BPRs.xml");
             CurrentNode = (XmlNode)(e.Node.Tag);
             if (CurrentNode != null)
             {
@@ -817,12 +816,19 @@ namespace EVE_Planetary
                 string name = "";
                 try
                 {
-                    name = ((YamlScalarNode)((YamlMappingNode)((YamlMappingNode)KVP.Value).Children["name"]).Children["ru"]).Value;
+                    name = ((YamlScalarNode)((YamlMappingNode)((YamlMappingNode)KVP.Value).Children["name"]).Children[langselector.Text]).Value;
                 }
                 catch (Exception ex)
                 {
-                    name = id.ToString();
-                    // MessageBox.Show(id.ToString(), ex.Message);
+                    try
+                    {
+                        name = ((YamlScalarNode)((YamlMappingNode)((YamlMappingNode)KVP.Value).Children["name"]).Children["en"]).Value;
+                    }
+                    catch (Exception ex1)
+                    {
+                        name = id.ToString();
+                        // MessageBox.Show(id.ToString(), ex.Message);
+                    }
                 }
                 //MessageBox.Show(name);
                 DataRow ndr = MainPricesDT.NewRow();
@@ -843,35 +849,76 @@ namespace EVE_Planetary
         private void yamlBlueprintsReader()
         {
             YamlStream stream = new YamlStream();
-            using (var reader = new StreamReader(@"Resources/typeIDs.yaml"))
+            using (var reader = new StreamReader(@"Resources/blueprints.yaml"))
             {
                 stream.Load(reader);
             }
             YamlDocument yaDoc = stream.Documents[0];
             YamlMappingNode yamm = (YamlMappingNode)(yaDoc.RootNode);
-            DGVPrices.DataSource = null;
-            MainPricesDT.Clear();
-            MainPricesDT = CreatePriceTable();
             foreach (KeyValuePair<YamlNode, YamlNode> KVP in yamm.Children)
             {
                 int id = Convert.ToInt32(((YamlScalarNode)KVP.Key).Value);
-                string name = "";
+                DataRow[] dr = MainPricesDT.Select("[ID] = " + id.ToString());
+                string nameBP = dr[0]["Name"].ToString();
+                string nameOut = "";
+                double counOut = 0;
+                int idOut = 0;
                 try
                 {
-                    name = ((YamlScalarNode)((YamlMappingNode)((YamlMappingNode)KVP.Value).Children["name"]).Children["ru"]).Value;
+                    YamlNode manufactNode = KVP.Value["activities"]["manufacturing"];
+                    YamlNode prodOutNode = manufactNode["products"][0];
+                    YamlNode MaterialInNode = manufactNode["materials"][0];
+                    idOut = Convert.ToInt32(((YamlScalarNode)prodOutNode["typeID"]).Value.ToString());
+                    counOut = Convert.ToInt32(((YamlScalarNode)prodOutNode["quantity"]).Value.ToString());
+                    nameOut = MainPricesDT.Select("[ID] = " + idOut.ToString())[0]["Name"].ToString();
+
+                    #region TODO tree adding
+                    XmlDocument xmlBPRDoc = new XmlDocument();
+                    xmlBPRDoc.Load(@"Resources/BPRs.xml");
+
+                    CurrentNode = (XmlNode)xmlBPRDoc.DocumentElement.SelectSingleNode("/BPRs/B");
+                    CurrenttreeView = treeViewFormManuf;
+                    CurrenttreeView.SelectedNode = treeViewFormManuf.TopNode;
+                    XmlElement elm = CurrentNode.OwnerDocument.CreateElement("BPR");
+                    elm.SetAttribute("Name", nameBP);
+                    AddSingleNode(CurrentNode.InsertAfter(elm, CurrentNode.LastChild), CurrenttreeView.SelectedNode);
+                    CurrentNode = (XmlNode)xmlBPRDoc.DocumentElement.SelectSingleNode("/BPRs/B/BPR");
+                    elm = CurrentNode.OwnerDocument.CreateElement("Out");
+                    elm.SetAttribute("Name", nameOut);
+                    elm.SetAttribute("id", idOut.ToString());
+                    elm.SetAttribute("count", counOut.ToString());
+                    AddSingleNode(CurrentNode.InsertAfter(elm, CurrentNode.LastChild), CurrenttreeView.SelectedNode);
+
+                    /*
+                    if ((textBoxFormManufOutName.Text != "") && (CurrentNode.Name == "Out"))
+                    {
+                        XmlElement elm = CurrentNode.OwnerDocument.CreateElement("In");
+                        elm.SetAttribute("Name", textBoxFormManufInputName.Text);
+                        elm.SetAttribute("id", textBoxFormManufInputID.Text);
+                        elm.SetAttribute("count", textBoxFormManufInputCount.Text);
+                        elm.InnerText = textBoxFormManufInputCount.Text;
+                        AddSingleNode(CurrentNode.InsertAfter(elm, CurrentNode.LastChild), CurrenttreeView.SelectedNode);
+                    }*/
+                    #endregion
                 }
                 catch (Exception ex)
                 {
-                    name = id.ToString();
-                    // MessageBox.Show(id.ToString(), ex.Message);
+                    try
+                    {
+                        nameOut = ((YamlScalarNode)((YamlMappingNode)((YamlMappingNode)KVP.Value).Children["name"]).Children["en"]).Value;
+                    }
+                    catch (Exception ex1)
+                    {
+                        nameOut = id.ToString();
+                        // MessageBox.Show(id.ToString(), ex.Message);
+                    }
                 }
-                //MessageBox.Show(name);
+                /*MessageBox.Show(name);
                 DataRow ndr = MainPricesDT.NewRow();
                 ndr["id"] = id;
-                ndr["Name"] = name;
-                MainPricesDT.Rows.Add(ndr);
+                ndr["Name"] = nameOut;
+                //MainPricesDT.Rows.Add(ndr);*/
             }
-            ShowPriceDGV();
         }
 
         private void BPYAMLReadBTTN_Click(object sender, EventArgs e)

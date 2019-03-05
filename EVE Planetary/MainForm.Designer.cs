@@ -65,6 +65,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.BPYAMLReadBTTN = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.tabCalc = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
@@ -80,7 +81,7 @@
             this.TabCalcPlanet = new System.Windows.Forms.TabPage();
             this.TabCalcReact = new System.Windows.Forms.TabPage();
             this.ProgressBarPrice = new System.Windows.Forms.ProgressBar();
-            this.BPYAMLReadBTTN = new System.Windows.Forms.Button();
+            this.langselector = new System.Windows.Forms.ComboBox();
             this.TabControlMain.SuspendLayout();
             this.tabPrice.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitPrices)).BeginInit();
@@ -149,6 +150,7 @@
             // 
             // splitPrices.Panel2
             // 
+            this.splitPrices.Panel2.Controls.Add(this.langselector);
             this.splitPrices.Panel2.Controls.Add(this.SaveBttn);
             this.splitPrices.Panel2.Controls.Add(this.ClearEmpty);
             this.splitPrices.Panel2.Controls.Add(this.button1);
@@ -205,7 +207,7 @@
             // 
             this.button1.BackColor = System.Drawing.Color.Transparent;
             this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(285, 7);
+            this.button1.Location = new System.Drawing.Point(394, 7);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(88, 31);
             this.button1.TabIndex = 0;
@@ -529,6 +531,18 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "BP Name";
             // 
+            // BPYAMLReadBTTN
+            // 
+            this.BPYAMLReadBTTN.BackColor = System.Drawing.Color.Transparent;
+            this.BPYAMLReadBTTN.ForeColor = System.Drawing.Color.Black;
+            this.BPYAMLReadBTTN.Location = new System.Drawing.Point(99, 7);
+            this.BPYAMLReadBTTN.Name = "BPYAMLReadBTTN";
+            this.BPYAMLReadBTTN.Size = new System.Drawing.Size(88, 31);
+            this.BPYAMLReadBTTN.TabIndex = 0;
+            this.BPYAMLReadBTTN.Text = "Load YAML";
+            this.BPYAMLReadBTTN.UseVisualStyleBackColor = false;
+            this.BPYAMLReadBTTN.Click += new System.EventHandler(this.BPYAMLReadBTTN_Click);
+            // 
             // button2
             // 
             this.button2.BackColor = System.Drawing.Color.Transparent;
@@ -715,17 +729,20 @@
             this.ProgressBarPrice.Size = new System.Drawing.Size(800, 10);
             this.ProgressBarPrice.TabIndex = 1;
             // 
-            // BPYAMLReadBTTN
+            // langselector
             // 
-            this.BPYAMLReadBTTN.BackColor = System.Drawing.Color.Transparent;
-            this.BPYAMLReadBTTN.ForeColor = System.Drawing.Color.Black;
-            this.BPYAMLReadBTTN.Location = new System.Drawing.Point(99, 7);
-            this.BPYAMLReadBTTN.Name = "BPYAMLReadBTTN";
-            this.BPYAMLReadBTTN.Size = new System.Drawing.Size(88, 31);
-            this.BPYAMLReadBTTN.TabIndex = 0;
-            this.BPYAMLReadBTTN.Text = "Load YAML";
-            this.BPYAMLReadBTTN.UseVisualStyleBackColor = false;
-            this.BPYAMLReadBTTN.Click += new System.EventHandler(this.BPYAMLReadBTTN_Click);
+            this.langselector.FormattingEnabled = true;
+            this.langselector.Items.AddRange(new object[] {
+            "en",
+            "ru",
+            "de",
+            "fr",
+            "ja",
+            "zh"});
+            this.langselector.Location = new System.Drawing.Point(337, 13);
+            this.langselector.Name = "langselector";
+            this.langselector.Size = new System.Drawing.Size(51, 21);
+            this.langselector.TabIndex = 1;
             // 
             // MainForm
             // 
@@ -824,6 +841,7 @@
         private System.Windows.Forms.Button ButtonRemoveManuf;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button BPYAMLReadBTTN;
+        private System.Windows.Forms.ComboBox langselector;
     }
 }
 
