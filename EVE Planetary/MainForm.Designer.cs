@@ -34,6 +34,7 @@
             this.tabPrice = new System.Windows.Forms.TabPage();
             this.splitPrices = new System.Windows.Forms.SplitContainer();
             this.DGVPrices = new System.Windows.Forms.DataGridView();
+            this.langselector = new System.Windows.Forms.ComboBox();
             this.SaveBttn = new System.Windows.Forms.Button();
             this.ClearEmpty = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -81,7 +82,7 @@
             this.TabCalcPlanet = new System.Windows.Forms.TabPage();
             this.TabCalcReact = new System.Windows.Forms.TabPage();
             this.ProgressBarPrice = new System.Windows.Forms.ProgressBar();
-            this.langselector = new System.Windows.Forms.ComboBox();
+            this.save_formulas = new System.Windows.Forms.Button();
             this.TabControlMain.SuspendLayout();
             this.tabPrice.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitPrices)).BeginInit();
@@ -179,6 +180,21 @@
             this.DGVPrices.Size = new System.Drawing.Size(786, 360);
             this.DGVPrices.TabIndex = 0;
             // 
+            // langselector
+            // 
+            this.langselector.FormattingEnabled = true;
+            this.langselector.Items.AddRange(new object[] {
+            "en",
+            "ru",
+            "de",
+            "fr",
+            "ja",
+            "zh"});
+            this.langselector.Location = new System.Drawing.Point(337, 13);
+            this.langselector.Name = "langselector";
+            this.langselector.Size = new System.Drawing.Size(51, 21);
+            this.langselector.TabIndex = 1;
+            // 
             // SaveBttn
             // 
             this.SaveBttn.BackColor = System.Drawing.Color.Transparent;
@@ -253,6 +269,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.BPYAMLReadBTTN);
+            this.splitContainer2.Panel2.Controls.Add(this.save_formulas);
             this.splitContainer2.Panel2.Controls.Add(this.button2);
             this.splitContainer2.Size = new System.Drawing.Size(786, 418);
             this.splitContainer2.SplitterDistance = 360;
@@ -729,20 +746,17 @@
             this.ProgressBarPrice.Size = new System.Drawing.Size(800, 10);
             this.ProgressBarPrice.TabIndex = 1;
             // 
-            // langselector
+            // save_formulas
             // 
-            this.langselector.FormattingEnabled = true;
-            this.langselector.Items.AddRange(new object[] {
-            "en",
-            "ru",
-            "de",
-            "fr",
-            "ja",
-            "zh"});
-            this.langselector.Location = new System.Drawing.Point(337, 13);
-            this.langselector.Name = "langselector";
-            this.langselector.Size = new System.Drawing.Size(51, 21);
-            this.langselector.TabIndex = 1;
+            this.save_formulas.BackColor = System.Drawing.Color.Transparent;
+            this.save_formulas.ForeColor = System.Drawing.Color.Black;
+            this.save_formulas.Location = new System.Drawing.Point(193, 7);
+            this.save_formulas.Name = "save_formulas";
+            this.save_formulas.Size = new System.Drawing.Size(88, 31);
+            this.save_formulas.TabIndex = 0;
+            this.save_formulas.Text = "Save Formulas";
+            this.save_formulas.UseVisualStyleBackColor = false;
+            this.save_formulas.Click += new System.EventHandler(this.save_formulas_Click);
             // 
             // MainForm
             // 
@@ -842,6 +856,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button BPYAMLReadBTTN;
         private System.Windows.Forms.ComboBox langselector;
+        private System.Windows.Forms.Button save_formulas;
     }
 }
 

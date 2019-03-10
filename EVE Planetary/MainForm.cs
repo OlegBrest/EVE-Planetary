@@ -600,7 +600,9 @@ namespace EVE_Planetary
                 }
             }
             treeNode.Tag = inXmlNode;
-            inTreeNode.Nodes.Add(treeNode);
+            int treeindx = inTreeNode.Nodes.Add(treeNode);
+
+            inTreeNode.TreeView.SelectedNode = inTreeNode.TreeView.Nodes[0].Nodes[treeindx];
         }
 
         private DataTable ReadXmlBPR()
@@ -855,11 +857,14 @@ namespace EVE_Planetary
             }
             YamlDocument yaDoc = stream.Documents[0];
             YamlMappingNode yamm = (YamlMappingNode)(yaDoc.RootNode);
+            xmlBPRDoc = new XmlDocument();
+            xmlBPRDoc.Load(@"Resources/BPRs.xml");
             foreach (KeyValuePair<YamlNode, YamlNode> KVP in yamm.Children)
             {
                 int id = Convert.ToInt32(((YamlScalarNode)KVP.Key).Value);
                 DataRow[] dr = MainPricesDT.Select("[ID] = " + id.ToString());
-                string nameBP = dr[0]["Name"].ToString();
+
+                string nameBP = (dr.Count() > 0) ? dr[0]["Name"].ToString() : ("Not found..." + id.ToString());
                 string nameOut = "";
                 double counOut = 0;
                 int idOut = 0;
@@ -872,17 +877,14 @@ namespace EVE_Planetary
                     counOut = Convert.ToInt32(((YamlScalarNode)prodOutNode["quantity"]).Value.ToString());
                     nameOut = MainPricesDT.Select("[ID] = " + idOut.ToString())[0]["Name"].ToString();
 
-                    #region TODO tree adding
-                    XmlDocument xmlBPRDoc = new XmlDocument();
-                    xmlBPRDoc.Load(@"Resources/BPRs.xml");
+                    #region TODO need to add materials
 
                     CurrentNode = (XmlNode)xmlBPRDoc.DocumentElement.SelectSingleNode("/BPRs/B");
                     CurrenttreeView = treeViewFormManuf;
-                    CurrenttreeView.SelectedNode = treeViewFormManuf.TopNode;
                     XmlElement elm = CurrentNode.OwnerDocument.CreateElement("BPR");
                     elm.SetAttribute("Name", nameBP);
-                    AddSingleNode(CurrentNode.InsertAfter(elm, CurrentNode.LastChild), CurrenttreeView.SelectedNode);
-                    CurrentNode = (XmlNode)xmlBPRDoc.DocumentElement.SelectSingleNode("/BPRs/B/BPR");
+                    AddSingleNode(CurrentNode.InsertAfter(elm, CurrentNode.LastChild), CurrenttreeView.Nodes[0]);
+                    CurrentNode = GetXmlNodeByName(nameBP, xmlBPRDoc.DocumentElement.SelectSingleNode("/BPRs/B"));
                     elm = CurrentNode.OwnerDocument.CreateElement("Out");
                     elm.SetAttribute("Name", nameOut);
                     elm.SetAttribute("id", idOut.ToString());
@@ -923,7 +925,90 @@ namespace EVE_Planetary
 
         private void BPYAMLReadBTTN_Click(object sender, EventArgs e)
         {
+            treeViewFormManuf.Hide();
             yamlBlueprintsReader();
+            treeViewFormManuf.Show();
+        }
+
+        private void AddYamlNode(YamlNode inYamlNode, XmlNode inXmlNode, TreeNode inTreeNode)
+        {
+            XmlNode xNode;
+            TreeNode tNode;
+            XmlNodeList nodeList;
+            int i;
+            if (inXmlNode.HasChildNodes)
+            {
+                nodeList = inXmlNode.ChildNodes;
+                int nodsCount = nodeList.Count;
+                for (i = 0; i < nodsCount; i++)
+                {
+                    xNode = inXmlNode.ChildNodes[i];
+                    XmlAttributeCollection attributeCollection = xNode.Attributes;
+                    TreeNode treeNode = new TreeNode();
+                    treeNode.Name = xNode.Name;
+                    if (attributeCollection != null)
+                    {
+                        //проверяем наличие атрибута Name
+                        if (attributeCollection["Name"] != null)
+                        {
+                            treeNode.Text = attributeCollection["Name"].Value.ToString();
+                        }
+                        else
+                        {
+                            treeNode.Text = xNode.Name;
+                        }
+                        //проверяем наличие атрибута Name
+                        if (attributeCollection["count"] != null)
+                        {
+                            treeNode.Text += (" | " + attributeCollection["count"].Value.ToString());
+                        }
+                    }
+                    if (xNode.Name != "#text")
+                    {
+                        treeNode.Tag = xNode;
+                        int intNode = inTreeNode.Nodes.Add(treeNode);
+                        tNode = inTreeNode.Nodes[i];
+                        inTreeNode.Nodes[intNode].Parent.Tag = xNode.ParentNode;
+                        AddNode(xNode, tNode);
+                    }
+
+                }
+            }
+            else
+            {
+                inTreeNode.Tag = inXmlNode;
+            }
+        }
+
+        private void save_formulas_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(@"Resources/formulas.xml")) File.Delete(@"Resources/formulas.xml");
+            xmlBPRDoc.Save(@"Resources/formulas.xml");
+        }
+
+        private XmlNode GetXmlNodeByName(string name, XmlNode inXmlNode)
+        {
+            XmlNode outNode = null;
+            if (inXmlNode.Attributes["Name"] != null)
+            {
+                if (inXmlNode.Attributes["Name"].Value.ToString() == name) outNode = inXmlNode;
+            }
+            if (outNode == null)
+            {
+                if (inXmlNode.HasChildNodes)
+                {
+                    foreach (XmlNode _xmlNode in inXmlNode.ChildNodes)
+                    {
+                        if (_xmlNode.HasChildNodes) GetXmlNodeByName(name, _xmlNode);
+                        if (_xmlNode.Attributes["Name"].Value.ToString() == name)
+                        {
+                            outNode = _xmlNode;
+                            break;
+                        }
+                    }
+                }
+            }
+            return outNode;
         }
     }
 }
